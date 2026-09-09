@@ -1,12 +1,12 @@
-// functions.js - Lógica central con comodines, rachas y optimización
+// functions.js - Lógica central corregida
 let currentMode = 'general';
 let gameQuestions = [];
 let currentQIndex = 0;
 let points = 0;
 let streak = 0;
 let timer = null;
-let timeLeft = 10;
-let maxTime = 10;
+let timeLeft = 15;
+let maxTime = 15;
 
 let generalSubMode = 'individual';
 let teamsList = [];
@@ -24,6 +24,9 @@ let charPointsPossible = 100;
 let completeSlots = [];
 let completeCorrectWords = [];
 let availableWordPool = [];
+
+// Control de Roles para Modo Personaje
+let selectedCharRole = 'participant';
 
 function showHub() {
   if (timer) clearInterval(timer);
@@ -93,7 +96,7 @@ function startGame(mode) {
   
   if (mode === 'general') {
     const diff = document.getElementById('difficulty').value;
-    maxTime = 10;
+    maxTime = 15;
     let source = (database.general && database.general[diff]) ? database.general[diff] : [];
     let rawQuestions = selectRandomQuestions(source, 10);
     
@@ -119,21 +122,19 @@ function startGame(mode) {
     
   } else if (mode === 'book') {
     const diff = document.getElementById('book-difficulty').value;
-    maxTime = 10;
+    maxTime = 15;
     let source = (database.books && database.books[diff]) ? database.books[diff] : [];
     let rawQuestions = selectRandomQuestions(source, 10);
     
-    // Mapeo seguro de opciones y respuestas mezcladas idéntico al de trivia general
     gameQuestions = rawQuestions.map(q => {
       let indices = [0, 1, 2, 3].sort(() => Math.random() - 0.5);
       return { ...q, o: indices.map(i => q.o[i]), a: indices.indexOf(q.a) };
     });
     
     document.querySelectorAll('.card > div').forEach(div => div.classList.add('hidden'));
-    document.getElementById('game-screen').classList.remove('hidden');
-    renderGeneralQuestion();
-  
-} else if (mode === 'complete') {
+    document.getElementById('book-game-screen').classList.remove('hidden');
+    renderBookQuestion();
+  } else if (mode === 'complete') {
     const diff = document.getElementById('complete-difficulty').value;
     maxTime = 30;
     let source = (database.completeVerses && database.completeVerses[diff]) ? database.completeVerses[diff] : [];
@@ -143,6 +144,24 @@ function startGame(mode) {
     document.getElementById('complete-game-screen').classList.remove('hidden');
     renderCompleteQuestion();
   }
+}
+
+function setCharRole(role) {
+  selectedCharRole = role;
+  const btnPart = document.getElementById('btn-role-part');
+  const btnMod = document.getElementById('btn-role-mod');
+
+  if (role === 'participant') {
+    btnPart.style.background = 'var(--gold-light)';
+    btnMod.style.background = '#ffffff';
+  } else {
+    btnMod.style.background = 'var(--gold-light)';
+    btnPart.style.background = '#ffffff';
+  }
+}
+
+function startCharacterGame() {
+  startCharGameWithRole(selectedCharRole);
 }
 
 function startCharGameWithRole(role) {
@@ -183,7 +202,6 @@ function renderGeneralQuestion() {
     document.getElementById('player-display').innerText = `Puntos: ${points}`;
   }
 
-  // Actualizar interfaz de comodines y racha
   document.getElementById('streak-display').innerText = streak;
   document.getElementById('count-50').innerText = count50;
   document.getElementById('count-prob').innerText = countProb;
@@ -198,13 +216,7 @@ function renderGeneralQuestion() {
   document.getElementById('next-btn').classList.add('hidden');
 
   const container = document.getElementById('options-container');
-  container.innerHTML = ""; // Limpia contenedores anteriores
-
-  // Validación de seguridad por si la pregunta no trae opciones cargadas
-  if (!q.o || !Array.isArray(q.o)) {
-    console.error("La pregunta actual no contiene un arreglo de opciones válido:", q);
-    return;
-  }
+  container.innerHTML = "";
 
   q.o.forEach((opt, idx) => {
     const btn = document.createElement('button');
@@ -216,10 +228,9 @@ function renderGeneralQuestion() {
     container.appendChild(btn);
   });
 
-  startTimer('timer', q.a);
+  startTimer('timer', q.a, 15);
 }
 
-// --- COMODÍN 50/50 ---
 function useLifeline50() {
   if (count50 <= 0) return;
   count50--;
@@ -232,7 +243,6 @@ function useLifeline50() {
     if (idx !== q.a) incorrectIndices.push(idx);
   });
 
-  // Desactivar dos incorrectas de manera aleatoria
   incorrectIndices.sort(() => Math.random() - 0.5);
   let removedCount = 0;
   incorrectIndices.forEach(idx => {
@@ -250,7 +260,6 @@ function useLifeline50() {
   showInlineNotification("✨ Comodín 50/50 aplicado: se eliminaron dos opciones incorrectas.");
 }
 
-// --- COMODÍN DE PROBABILIDAD ---
 function useLifelineProb() {
   if (countProb <= 0) return;
   countProb--;
@@ -258,8 +267,7 @@ function useLifelineProb() {
   document.getElementById('lifeline-prob-btn').disabled = true;
 
   const q = gameQuestions[currentQIndex];
-  // Simular porcentajes congregacionales (dando ventaja clara a la correcta)
-  let correctProb = Math.floor(Math.random() * 25) + 65; // 65% - 89%
+  let correctProb = Math.floor(Math.random() * 25) + 65;
   let remainingProb = 100 - correctProb;
   let incorrectProbs = [];
   
@@ -293,8 +301,9 @@ function showInlineNotification(msg) {
   notif.classList.remove('hidden');
 }
 
-function startTimer(timerElementId, correctIdx) {
+function startTimer(timerElementId, correctIdx, seconds) {
   if (timer) clearInterval(timer);
+  timeLeft = seconds;
   const timerElem = document.getElementById(timerElementId);
   if (timerElem) timerElem.innerText = `⏳ ${timeLeft}s`;
   
@@ -311,8 +320,10 @@ function startTimer(timerElementId, correctIdx) {
 
     if (timeLeft <= 0) {
       clearInterval(timer);
-      if (currentMode === 'general' || currentMode === 'book') {
+      if (currentMode === 'general') {
         handleGeneralAnswer(-1, correctIdx);
+      } else if (currentMode === 'book') {
+        handleBookAnswer(-1, correctIdx);
       } else if (currentMode === 'complete') {
         validateCompleteAttempt();
       } else if (currentMode === 'character') {
@@ -344,10 +355,8 @@ function handleGeneralAnswer(selectedIdx, correctIdx) {
       points += 10;
     }
     
-    // Sistema de racha y renovación de comodines cada 3 aciertos
     streak++;
     if (streak % 3 === 0) {
-      count55Add = Math.random() > 0.5 ? '50/50' : 'Probabilidad';
       if (Math.random() > 0.5) count50++; else countProb++;
       showInlineNotification(`🔥 ¡Racha de ${streak}! Se ha renovado un comodín automáticamente.`);
     }
@@ -356,7 +365,7 @@ function handleGeneralAnswer(selectedIdx, correctIdx) {
     if (correctIdx >= 0 && document.getElementById(`opt-btn-${correctIdx}`)) {
       document.getElementById(`opt-btn-${correctIdx}`).classList.add('correct');
     }
-    streak = 0; // Se rompe la racha
+    streak = 0;
   }
 
   document.getElementById('streak-display').innerText = streak;
@@ -385,7 +394,64 @@ function nextQuestion() {
   renderGeneralQuestion();
 }
 
-// --- MODO PERSONAJE: PARTICIPANTE ---
+function renderBookQuestion() {
+  if (timer) clearInterval(timer);
+  if (currentQIndex >= gameQuestions.length) { showFinalResults(); return; }
+
+  const q = gameQuestions[currentQIndex];
+  document.getElementById('book-question-tracker').innerText = `Pregunta ${currentQIndex + 1}/${gameQuestions.length}`;
+  document.getElementById('book-question-text').innerText = q.q;
+  document.getElementById('book-player-display').innerText = `Puntos: ${points}`;
+  
+  document.getElementById('book-citation-text').classList.add('hidden');
+  document.getElementById('book-next-btn').classList.add('hidden');
+
+  const container = document.getElementById('book-options-container');
+  container.innerHTML = "";
+
+  if (!q.o || !Array.isArray(q.o)) return;
+
+  q.o.forEach((opt, idx) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'btn option-btn';
+    btn.id = `book-opt-btn-${idx}`;
+    btn.innerText = opt;
+    btn.onclick = () => handleBookAnswer(idx, q.a);
+    container.appendChild(btn);
+  });
+
+  startTimer('book-timer', q.a, 15);
+}
+
+function handleBookAnswer(selectedIdx, correctIdx) {
+  if (timer) clearInterval(timer);
+  const q = gameQuestions[currentQIndex];
+  const buttons = document.querySelectorAll('#book-options-container .btn');
+  buttons.forEach(b => b.disabled = true);
+
+  if (selectedIdx === correctIdx) {
+    if (selectedIdx >= 0) document.getElementById(`book-opt-btn-${selectedIdx}`).classList.add('correct');
+    points += 10;
+  } else {
+    if (selectedIdx >= 0) document.getElementById(`book-opt-btn-${selectedIdx}`).classList.add('incorrect');
+    if (correctIdx >= 0 && document.getElementById(`book-opt-btn-${correctIdx}`)) {
+      document.getElementById(`book-opt-btn-${correctIdx}`).classList.add('correct');
+    }
+  }
+
+  document.getElementById('book-player-display').innerText = `Puntos: ${points}`;
+  const cit = document.getElementById('book-citation-text');
+  cit.innerHTML = `<strong>${q.c}:</strong> "${q.vt}"`;
+  cit.classList.remove('hidden');
+  document.getElementById('book-next-btn').classList.remove('hidden');
+}
+
+function nextBookQuestion() {
+  currentQIndex++;
+  renderBookQuestion();
+}
+
 function renderCharQuestion() {
   if (timer) clearInterval(timer);
   if (currentQIndex >= gameQuestions.length) { showFinalResults(); return; }
@@ -412,8 +478,7 @@ function renderCharQuestion() {
     container.appendChild(btn);
   });
 
-  timeLeft = 10;
-  startTimer('char-timer', null);
+  startTimer('char-timer', null, 10);
 }
 
 function revealNextClue() {
@@ -426,8 +491,7 @@ function revealNextClue() {
     li.innerText = q.clues[charCurrentClue];
     document.getElementById('clues-container').appendChild(li);
 
-    timeLeft = 10;
-    startTimer('char-timer', null); 
+    startTimer('char-timer', null, 10); 
 
     if (charCurrentClue === q.clues.length - 1) {
       document.getElementById('more-clue-btn').disabled = true;
@@ -458,7 +522,6 @@ function handleCharAnswer(opt, btn, correctName) {
 
 function nextCharQuestion() { currentQIndex++; renderCharQuestion(); }
 
-// --- MODO PERSONAJE: MODERADOR ---
 function renderCharModQuestion() {
   if (timer) clearInterval(timer);
   if (currentQIndex >= gameQuestions.length) { showFinalResults(); return; }
@@ -482,8 +545,7 @@ function renderCharModQuestion() {
     container.appendChild(div);
   });
 
-  timeLeft = 100;
-  startTimer('char-mod-timer', null);
+  startTimer('char-mod-timer', null, 100);
 }
 
 function revealModAnswer() {
@@ -529,7 +591,6 @@ function revealModAnswer() {
 
 function nextCharModQuestion() { currentQIndex++; renderCharModQuestion(); }
 
-// --- MODO VERSÍCULOS ---
 function renderCompleteQuestion() {
   if (timer) clearInterval(timer);
   if (currentQIndex >= gameQuestions.length) { showFinalResults(); return; }
@@ -551,9 +612,7 @@ function renderCompleteQuestion() {
   availableWordPool = [...q.correct, ...q.distractors].sort(() => Math.random() - 0.5);
   renderWordPool();
 
-  maxTime = 30;
-  timeLeft = 30;
-  startTimer('complete-timer', null);
+  startTimer('complete-timer', null, 30);
 }
 
 function updateCompleteDisplayWithoutNumbers(template) {
