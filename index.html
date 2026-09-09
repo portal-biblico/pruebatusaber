@@ -88,23 +88,22 @@
     <button class="btn btn-secondary" onclick="showHub()">Volver al Menú Principal</button>
   </div>
 
-  <!-- CONFIGURACIÓN DE ¿QUÉ PERSONAJE ES? -->
+<!-- CONFIGURACIÓN DE ¿QUÉ PERSONAJE ES? -->
   <div id="char-setup-screen" class="hidden">
     <h1>¿Qué personaje es?</h1>
     <div class="form-group">
-      <label>Selecciona el Modo de Uso:</label>
-      <div class="menu-grid">
-        <button class="menu-btn" onclick="startCharGameWithRole('participant')">
+      <label>Selecciona tu Rol:</label>
+      <div class="menu-grid" style="margin-bottom: 15px;">
+        <button class="menu-btn" id="btn-role-part" onclick="setCharRole('participant')" style="background: var(--gold-light);">
           <span>👤 Participante</span>
           <small style="font-weight:400; font-size:0.75rem;">10s por pista, individual</small>
         </button>
-        <button class="menu-btn" onclick="startCharGameWithRole('moderator')">
+        <button class="menu-btn" id="btn-role-mod" onclick="setCharRole('moderator')">
           <span>👥 Moderador</span>
           <small style="font-weight:400; font-size:0.75rem;">100s total, con entrega de puntos</small>
         </button>
       </div>
-    </div>
-    <div class="form-group" style="margin-top: 15px;">
+
       <label>Dificultad:</label>
       <select id="char-difficulty">
         <option value="easy">Nuevo Convertido (fácil)</option>
@@ -112,6 +111,7 @@
         <option value="hard">Profeta (desafío)</option>
       </select>
     </div>
+    <button class="btn" onclick="startCharacterGame()">Iniciar Trivia</button>
     <button class="btn btn-secondary" onclick="showHub()">Volver al Menú Principal</button>
   </div>
 
@@ -130,7 +130,28 @@
     <button class="btn btn-secondary" onclick="showHub()">Volver al Menú Principal</button>
   </div>
 
-  <!-- PANTALLA DE JUEGO GENERAL / LIBRO -->
+ <!-- PANTALLA DE JUEGO: ¿QUÉ LIBRO ESTÁ? (DEDICADA) -->
+  <div id="book-game-screen" class="hidden">
+    <div class="status-bar">
+      <div>
+        <span id="book-player-display">Puntos: 0</span>
+      </div>
+      <span class="timer" id="book-timer">⏳ 15s</span>
+    </div>
+
+    <div style="text-align: right; font-size: 0.85rem; font-weight: 600; color: #666; margin-bottom: 4px;" id="book-question-tracker">Pregunta 1/10</div>
+
+    <div class="question-box">
+      <h3 id="book-question-text" style="margin: 0; font-size: 1.2rem; text-align: left; line-height: 1.4;">Cargando...</h3>
+    </div>
+
+    <div id="book-options-container"></div>
+    <div id="book-citation-text" class="citation-box hidden"></div>
+    
+    <button id="book-next-btn" class="btn hidden" onclick="nextBookQuestion()">Siguiente Pregunta</button>
+    <button class="btn btn-secondary" onclick="showHub()">Volver al Menú Principal</button>
+  </div>
+
   <!-- PANTALLA DE JUEGO GENERAL / LIBRO (CON COMODINES) -->
   <div id="game-screen" class="hidden">
     <div class="status-bar">
