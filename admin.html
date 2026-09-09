@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Administración - Trivia Bíblica RVR1960</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    textarea { width: 100%; height: 180px; padding: 10px; border-radius: 8px; border: 1px solid #ccc; font-family: monospace; font-size: 0.85rem; resize: vertical; }
+    select { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc; font-family: inherit; margin-bottom: 12px; }
+  </style>
+</head>
+<body>
+
+<div class="card" style="max-width: 750px;">
+  <h1>Panel de Administración</h1>
+  <p style="font-size: 0.85rem; color: #555; text-align: center;">Carga masiva de contenido para todas las modalidades de juego.</p>
+  
+  <div style="margin-bottom: 15px; background: #fdfbf7; border: 1px dashed var(--gold); padding: 12px; border-radius: 8px; text-align: center;">
+    <button class="btn" style="background: #27ae60; margin: 0;" onclick="downloadTemplateFile()">📄 Descargar Plantilla de Ejemplo (JSON)</button>
+  </div>
+
+  <div class="form-group">
+    <label>1. Selecciona la Modalidad de Trivia:</label>
+    <select id="bulk-trivia-type" onchange="updateHelpFormat()">
+      <option value="general">Trivia General</option>
+      <option value="books">¿En qué libro está?</option>
+      <option value="characters">¿Qué personaje es?</option>
+      <option value="complete">¿Cómo sigue el versículo?</option>
+    </select>
+
+    <label>2. Selecciona la Dificultad Destino:</label>
+    <select id="bulk-difficulty">
+      <option value="easy">Nuevo Convertido (fácil)</option>
+      <option value="medium">Bautizado (medio)</option>
+      <option value="hard">Profeta (difícil)</option>
+    </select>
+    
+    <label>3. Bloque de Datos (Pegar JSON):</label>
+    <textarea id="bulk-json-input" placeholder="Pega aquí el contenido de tu archivo JSON..."></textarea>
+  </div>
+  
+  <button class="btn" onclick="adminProcessBulk()">Procesar y Agregar Bloque</button>
+
+  <div style="margin-top: 20px; border-top: 1px solid #e2e8f0; padding-top: 15px; display: flex; gap: 10px;">
+    <button class="btn" style="background: var(--primary); flex: 1;" onclick="adminExportDatabaseFile()">📥 Descargar Base Actualizada (BASE_DDMM)</button>
+    <button class="btn btn-secondary" style="flex: 1; margin-top:0;" onclick="window.location.href='index.html'">Volver al Juego</button>
+  </div>
+</div>
+
+<script src="database.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>
