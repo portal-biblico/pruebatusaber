@@ -1,307 +1,728 @@
-const database = {
-  general: {
-  easy: [
-    { q: "¿En qué ciudad nació Jesús?", o: ["Jerusalén", "Belén", "Nazaret", "Jericó"], a: 1, c: "MATEO 2:1", vt: "Cuando Jesús nació en Belén de Judea en días del rey Herodes..."},
-    { q: "¿Quién construyó el arca para el diluvio?", o: ["Abraham", "Moisés", "Noé", "Jacob"], a: 2, c: "GÉNESIS 6:13-14", vt: "Dijo, pues, Dios a Noé... Hazte un arca..."},
-    { q: "¿Cuál es el primer libro de la Biblia?", o: ["Éxodo", "Mateo", "Génesis", "Salmos"], a: 2, c: "GÉNESIS 1:1", vt: "En el principio creó Dios los cielos y la tierra."},
-    { q: "¿Quién recibió los Diez Mandamientos?", o: ["Josué", "Aarón", "Moisés", "David"], a: 2, c: "ÉXODO 20:1", vt: "Y habló Dios todas estas palabras..."},
-    { q: "¿Qué apóstol negó a Jesús tres veces?", o: ["Juan", "Pedro", "Judas", "Tomás"], a: 1, c: "LUCAS 22:60", vt: "Y en seguida el gallo cantó."},
-    { q: "¿Quién derrotó a Goliat con una honda?", o: ["Saúl", "Salomón", "David", "Sansón"], a: 2, c: "1 SAMUEL 17:49", vt: "Y metiendo David su mano en la bolsa, tomó de allí una piedra..."},
-    { q: "¿Cuántos discípulos principales eligió Jesús?", o: ["7", "10", "12", "40"], a: 2, c: "MATEO 10:2", vt: "Los nombres de los doce apóstoles son estos..."},
-    { q: "¿Quién fue el primer hombre creado por Dios?", o: ["Abel", "Adán", "Seth", "Enoc"], a: 1, c: "GÉNESIS 2:7", vt: "Entonces Jehová Dios formó al hombre del polvo de la tierra..."},
-    { q: "¿Quién fue la primera mujer según el Génesis?", o: ["Sara", "María", "Eva", "Marta"], a: 2, c: "GÉNESIS 3:20", vt: "Y llamó Adán el nombre de su mujer, Eva..."},
-    { q: "¿Qué animal habló a Balam para reprenderlo?", o: ["Un perro", "Un asno", "Un caballo", "Una oveja"], a: 1, c: "NÚMEROS 22:28", vt: "Entonces Jehová abrió la boca al asna..."},
-    { q: "¿Cuál es el último libro del Nuevo Testamento?", o: ["Hechos", "Judas", "Apocalipsis", "Gálatas"], a: 2, c: "APOCALIPSIS 1:1", vt: "La revelación de Jesucristo..."},
-    { q: "¿En qué río fue bautizado Jesús?", o: ["Nilo", "Éufrates", "Jordán", "Tigris"], a: 2, c: "MATEO 3:13", vt: "Entonces Jesús vino de Galilea a Juan al Jordán..."},
-    { q: "¿Quién fue vendido por sus hermanos a los ismaelitas?", o: ["José", "Benjamín", "Rubén", "Judá"], a: 0, c: "GÉNESIS 37:28", vt: "Y vendieron a José a los ismaelitas por veinte piezas de plata."},
-    { q: "¿Quién traicionó a Jesús por 30 monedas de plata?", o: ["Pedro", "Pilato", "Judas", "Barrabás"], a: 2, c: "MATEO 26:15", vt: "Y ellos le asignaron treinta piezas de plata."},
-    { q: "¿Qué mar se dividió para que pasara Israel?", o: ["Mar Muerto", "Mar Rojo", "Mar Negro", "Mar de Galilea"], a: 1, c: "ÉXODO 14:21", vt: "Y extendió Moisés su mano sobre el mar..."},
-    { q: "¿Quién fue protegido en el foso de los leones?", o: ["Daniel", "David", "Sansón", "Gedeón"], a: 0, c: "DANIEL 6:22", vt: "Mi Dios envió su ángel, el cual cerró la boca de los leones..."},
-    { q: "¿Quién fue la madre terrenal de Jesús?", o: ["Isabel", "Ana", "María", "Marta"], a: 2, c: "LUCAS 1:30", vt: "María, no temas... concebirás en tu vientre..."},
-    { q: "¿Qué profeta fue tragado por un gran pez?", o: ["Jonás", "Pedro", "Pablo", "Moisés"], a: 0, c: "JONÁS 1:17", vt: "Pero Jehová tenía preparado un gran pez que tragase a Jonás..."},
-    { q: "¿Qué alimento llovió del cielo en el desierto para Israel?", o: ["Pan", "Maná", "Codornices", "Trigo"], a: 1, c: "ÉXODO 16:15", vt: "Es el pan que Jehová os da para comer."},
-    { q: "¿Quién fue el hombre más fuerte por su voto de nazareo?", o: ["Goliat", "Sansón", "Saúl", "David"], a: 1, c: "JUECES 16:17", vt: "Nunca a mi cabeza llegó navaja; porque soy nazareo de Dios..."},
-    { q: "¿Qué instrumento musical tocaba el rey David?", o: ["Trompeta", "Arpa", "Flauta", "Pandereta"], a: 1, c: "1 SAMUEL 16:23", vt: "David tomaba el arpa y ejecutaba con su mano; y Saúl tenía alivio..."},
-    { q: "¿A qué patriarca le dijo Dios que dejara su tierra y su parentela?", o: ["Moisés", "Abraham", "Noé", "Jacob"], a: 1, c: "GÉNESIS 12:1", vt: "Pero Jehová había dicho a Abram: Vete de tu tierra y de tu parentela..."},
-    { q: "¿Quién fue el padre del rey Salomón?", o: ["Saúl", "David", "Samuel", "Isaí"], a: 1, c: "MATEO 1:6", vt: "...y el rey David engendró a Salomón de la que fue mujer de Urías."},
-    { q: "¿Qué ave envió Noé en segundo lugar y trajo una hoja de olivo?", o: ["Un cuervo", "Una paloma", "Un águila", "Un gorrión"], a: 1, c: "GÉNESIS 8:11", vt: "Y la paloma volvió a él a la hora de la tarde; y he aquí que traía una hoja de olivo..."},
-    { q: "¿Con cuántos panes y peces alimentó Jesús milagrosamente a los 5000?", o: ["5 panes y 2 peces", "7 panes y 3 peces", "2 panes y 5 peces", "12 panes y 2 peces"], a: 0, c: "MATEO 14:17", vt: "Y ellos dijeron: No tenemos aquí sino cinco panes y dos peces."},
-    { q: "¿Cómo se le conoce popularmente al apóstol Juan en los evangelios?", o: ["El apóstol de la fe", "El discípulo a quien Jesús amaba", "El celote", "El colaborador"], a: 1, c: "JUAN 13:23", vt: "Y uno de sus discípulos, al cual Jesús amaba, estaba recostado al lado de Jesús."},
-    { q: "¿En qué ciudad fueron llamados los discípulos cristianos por primera vez?", o: ["Jerusalén", "Antioquía", "Roma", "Éfeso"], a: 1, c: "HECHOS 11:26", vt: "...y a los discípulos se les llamó cristianos por primera vez en Antioquía."},
-    { q: "¿Qué oficio tenía el apóstol Mateo antes de seguir a Jesús?", o: ["Pescador", "Carpintero", "Recaudador de impuestos", "Médico"], a: 2, c: "MATEO 9:9", vt: "pasando Jesús de allí, vio a un hombre llamado Mateo, que estaba sentado al banco de los tributos..."},
-    { q: "¿Quién interpretó los sueños del faraón en Egipto tras salir de la cárcel?", o: ["Moisés", "José", "Daniel", "Abraham"], a: 1, c: "GÉNESIS 41:25", vt: "Entonces respondió José al Faraón: El sueño del Faraón es uno mismo..."},
-    { q: "¿Cuál fue la señal del pacto que Dios hizo con Noé tras el diluvio?", o: ["Una estrella fugaz", "Un arco iris", "Una columna de fuego", "Una nube brillante"], a: 1, c: "GÉNESIS 9:13", vt: "Mi arco he puesto en las nubes, el cual será por señal del pacto..."},
-    { q: "¿Qué profeta sucedió a Elías tras ser llevado al cielo?", o: ["Eliseo", "Isaías", "Jeremías", "Samuel"], a: 0, c: "2 REYES 2:15", vt: "Viendo los hijos de los profetas que estaban en Jericó al enfrente, dijeron: El espíritu de Elías reposó sobre Eliseo."},
-    { q: "¿Quién era la madre de Samuel, quien lo dedicó al templo desde niño?", o: ["Ana", "Penina", "Sara", "Isabel"], a: 0, c: "1 SAMUEL 1:20", vt: "Ana concibió y dio a luz un hijo, y le puso por nombre Samuel..."},
-    { q: "¿Qué joven reina judía intercedió ante el rey Asuero para salvar a su pueblo?", o: ["Vasti", "Ester", "Rut", "Abigail"], a: 1, c: "ESTER 7:3", vt: "Entonces la reina Ester respondió y dijo: Oh rey, si he hallado gracia en tus ojos... séame dada mi vida..."},
-    { q: "¿Quién escribió la mayor cantidad de cartas o epístolas en el Nuevo Testamento?", o: ["Pedro", "Juan", "Pablo", "Santiago"], a: 2, c: "ROMANOS 1:1", vt: "Pablo, siervo de Jesucristo, llamado a ser apóstol, apartado para el evangelio de Dios..."},
-    { q: "¿Qué rey de Israel pidió sabiduría a Dios en lugar de riquezas?", o: ["David", "Salomón", "Saúl", "Josías"], a: 1, c: "1 REYES 3:9", vt: "Da, pues, a tu siervo corazón entendido para juzgar a tu pueblo..."},
-    { q: "¿Cómo se llamaba el monte donde Moisés recibió las tablas de la ley?", o: ["Monte Carmelo", "Monte Sinaí", "Monte de los Olivos", "Monte Tabor"], a: 1, c: "ÉXODO 19:20", vt: "Y descendió Jehová sobre el monte Sinaí, sobre la cumbre del monte..."},
-    { q: "¿Quién era el esposo de María, madre de Jesús?", o: ["Zacarías", "José", "Simeón", "Alfeo"], a: 1, c: "MATEO 1:19", vt: "José su marido, como era justo, y no quería infamarla, quiso dejarla secretamente."},
-    { q: "¿Qué discípulo dudó de la resurrección de Jesús hasta ver sus llagas?", o: ["Pedro", "Tomás", "Felipe", "Andrés"], a: 1, c: "JUAN 20:25", vt: "Si no viere en sus manos la señal de los clavos... no creeré."},
-    { q: "¿Quién fue arrojado al mar durante una gran tempestad por huir a Tarsis?", o: ["Pablo", "Jonás", "Pedro", "Noé"], a: 1, c: "JONÁS 1:15", vt: "Y tomaron a Jonás, y lo echaron al mar; y el mar se calmó de su furor."},
-    { q: "¿Qué rey ordenó arrojar a los tres hebreos al horno de fuego?", o: ["Darío", "Ciro", "Nabucodonosor", "Belsasar"], a: 2, c: "DANIEL 3:13", vt: "Entonces Nabucodonosor dijo con ira y con enojo que trajesen a Sadrac, Mesac y Abed-nego."},
-    { q: "¿Quién bautizó a Jesús en el río Jordán?", o: ["Pedro", "Juan el Bautista", "Felipe", "Esteban"], a: 1, c: "MATEO 3:13", vt: "Entonces Jesús vino de Galilea a Juan al Jordán, para ser bautizado por él."},
-    { q: "¿Qué mujer escondió a los espías enviados por Josué a Jericó?", o: ["Rut", "Rahab", "Débora", "Jael"], a: 1, c: "JOSUÉ 2:6", vt: "Mas ella los había hecho subir al terrón, y los había escondido entre los manojos de lino..."},
-    { q: "¿Cómo se llamaba el lugar fuera de Jerusalén donde crucificaron a Jesús?", o: ["Getsemaní", "Gólgota", "Betania", "Emaús"], a: 1, c: "JUAN 19:17", vt: "Y él, cargando su cruz, salió al lugar llamado de la Calavera, y en hebreo, Gólgota."},
-    { q: "¿Qué personaje bíblico fue conocido por su extrema paciencia ante la adversidad?", o: ["Abraham", "Job", "Isaac", "Noé"], a: 1, c: "JOB 1:1", vt: "Hubo un varón en tierra de Uz, llamado Job; y era este hombre perfecto y recto..."},
-    { q: "¿Cuál fue el primer milagro que realizó Jesús en las bodas de Caná?", o: ["Sanar a un paralítico", "Multiplicar los panes", "Convertir el agua en vino", "Caminar sobre el agua"], a: 2, c: "JUAN 2:11", vt: "Este principio de señales hizo Jesús en Caná de Galilea, y manifestó su gloria..."},
-    { q: "¿Qué profeta fue alimentado por cuervos junto al arroyo de Querit?", o: ["Elías", "Eliseo", "Isaías", "Jeremías"], a: 0, c: "1 REYES 17:6", vt: "Y los cuervos le traían pan y carne por la mañana, y pan y carne por la tarde..."},
-    { q: "¿Quién fue el sucesor directo de Moisés para guiar a Israel?", o: ["Caleb", "Josué", "Aarón", "Eleazar"], a: 1, c: "JOSUÉ 1:1-2", vt: "Aconteció después de la muerte de Moisés siervo de Jehová, que Jehová habló a Josué..."},
-    { q: "¿Qué apóstol escribió el libro de Apocalipsis mientras estaba en el exilio?", o: ["Pablo", "Pedro", "Juan", "Mateo"], a: 2, c: "APOCALIPSIS 1:9", vt: "Yo Juan, vuestro hermano... estaba en la isla llamada Patmos, por causa de la palabra de Dios..."},
-    { q: "¿Cómo se llamaban los padres de Juan el Bautista?", o: ["José y María", "Zacarías e Isabel", "Elcana y Ana", "Abraham y Sara"], a: 1, c: "LUCAS 1:5", vt: "Hubo en los días de Herodes, rey de Judea, un sacerdote llamado Zacarías... y su mujer era de las hijas de Aarón, y se llamaba Isabel."},
-    { q: "¿Qué apóstol era médico amado según las cartas paulinas?", o: ["Lucas", "Marcos", "Timoteo", "Tito"], a: 0, c: "COLOSENSES 4:14", vt: "Os saluda Lucas el médico amado, y Demas."},
-    { q: "¿Quién fue el rey que mandó a edificar el primer templo de Jerusalén?", o: ["David", "Salomón", "Ezequías", "Josías"], a: 1, c: "1 REYES 6:1", vt: "A los cuatrocientos ochenta años después que los hijos de Israel salieron de Egipto... edificó Salomón casa a Jehová."},
-    { q: "¿Cómo se llamaba la hermana de Moisés y Aarón?", o: ["Miriam", "Débora", "Abigail", "Hulda"], a: 0, c: "ÉXODO 15:20", vt: "Y Miriam la profetisa, hermana de Aarón, tomó un pandero en su mano..."},
-    { q: "¿Quién fue tragado por la tierra tras rebelarse contra Moisés y Aarón?", o: ["Coré", "Datán", "Abiram", "Los tres anteriores"], a: 3, c: "NÚMEROS 16:32", vt: "Y la tierra abrió su boca y los tragó, a ellos y a sus casas, y a todos los hombres de Coré..."},
-    { q: "¿Qué rey mandó a escribir la ley hallada por el sumo sacerdote Hilcías?", o: ["Josías", "Manasés", "Acaz", "Ezequías"], a: 0, c: "2 CRÓNICAS 34:14", vt: "Y al sacar el dinero que había sido hallado en la casa de Jehová, el sacerdote Hilcías halló el libro de la ley de Jehová dada por medio de Moisés."},
-    { q: "¿Cuál era el nombre hebreo de Daniel en la corte babilónica?", o: ["Beltsasar", "Sadrac", "Abed-nego", "Mesac"], a: 0, c: "DANIEL 1:7", vt: "Y el jefe de los eunucos les puso nombres: puso a Daniel, Beltsasar..."},
-    { q: "¿Qué profeta vio una visión de la gloria de Dios sobre un carro con ruedas celestiales?", o: ["Isaías", "Ezequiel", "Jeremías", "Daniel"], a: 1, c: "EZEQUIEL 1:4", vt: "Y miré, y he aquí venía del norte un viento tempestuoso, y una gran nube, con un fuego envolvente..."},
-    { q: "¿Quién fue el rey persa que emitió el decreto para la reconstrucción del templo judío?", o: ["Ciro", "Darío", "Artajerjes", "Asuero"], a: 0, c: "ESDRAS 1:1", vt: "En el primer año de Ciro rey de Persia... despertó Jehová el espíritu de Ciro rey de Persia, el cual hizo pregonar..."},
-    { q: "¿Qué discípulo llevó a su hermano Simón Pedro a conocer a Jesús?", o: ["Andrés", "Juan", "Felipe", "Santiago"], a: 0, c: "JUAN 1:40-42", vt: "Andrés, hermano de Simón Pedro, era uno de los dos que habían oído a Juan... Halló éste primero a su hermano Simón... y le llevó a Jesús."},
-    { q: "¿Qué hombre rico de Arimatea pidió a Pilato el cuerpo de Jesús para sepultarlo?", o: ["Nicodemo", "José", "Lázaro", "Gamaliel"], a: 1, c: "MATEO 27:57", vt: "Venida la tarde, un hombre rico de Arimatea, llamado José, que también había sido discípulo de Jesús..."},
-    { q: "¿Quién escribió el libro de los Hechos de los Apóstoles?", o: ["Pablo", "Pedro", "Lucas", "Juan"], a: 2, c: "HECHOS 1:1", vt: "En el primer tratado, oh Teófilo, hablé acerca de todas las cosas que Jesús comenzó a hacer y a enseñar..."},
-    { q: "¿Qué nombre recibe el monte donde Abraham estuvo a punto de ofrecer a Isaac?", o: ["Sinaí", "Moriah", "Carmelo", "Ararat"], a: 1, c: "GÉNESIS 22:2", vt: "Y dijo: Toma ahora tu hijo, tu único, a quien amas, Isaac, y vete a tierra de Moriah, y ofrécelo allí en holocausto..."},
-    { q: "¿Cómo se llamaba el suegro de Moisés, sacerdote de Madián?", o: ["Jetro", "Hormán", "Reuel", "Hobab"], a: 0, c: "ÉXODO 3:1", vt: "Apacentando Moisés las ovejas de Jetro su suegro, sacerdote de Madián..."},
-    { q: "¿Qué profeta multiplicó la harina y el aceite de una viuda en Sarepta?", o: ["Elías", "Eliseo", "Samuel", "Natán"], a: 0, c: "1 REYES 17:14", vt: "Porque Jehová Dios de Israel ha dicho así: La harina de la tinaja no escaseará, ni el aceite disminuirá..."},
-    { q: "¿Qué joven profeta fue llamado por Dios mientras dormía en el templo con Elí?", o: ["Samuel", "David", "Salomón", "Isaías"], a: 0, c: "1 SAMUEL 3:4", vt: "Jehová llamó a Samuel; y él respondió: Heme aquí."},
-    { q: "¿Quién fue el primer rey de la nación de Israel tras la división del reino?", o: ["Jeroboam", "Roboam", "Acab", "Omri"], a: 0, c: "1 REYES 11:31", vt: "Y dijo a Jeroboam: Toma para ti diez piezas; porque así dijo Jehová Dios de Israel: He aquí que yo rompo el reino de la mano de Salomón..."},
-    { q: "¿Qué rey de Judá construyó un túnel subterráneo para asegurar el agua en Jerusalén?", o: ["Ezequías", "Josías", "Josafat", "Uzías"], a: 0, c: "2 CRÓNICAS 32:30", vt: "Este mismo Ezequías cegó la fuente de las aguas de Gihón la de arriba, y las condujo hacia el occidente de la ciudad de David."},
-    { q: "¿Qué apóstol escribió el libro de las Revelaciones o Apocalipsis?", o: ["Pedro", "Pablo", "Juan", "Santiago"], a: 2, c: "APOCALIPSIS 1:1", vt: "La revelación de Jesucristo, que Dios le dio, para manifestar a sus siervos las cosas que deben suceder pronto..."},
-    { q: "¿Qué animal usó Sansón para quemar los sembrados de los filisteos?", o: ["Zorras", "Leones", "Caballos", "Bueyes"], a: 0, c: "JUECES 15:4", vt: "Y fue Sansón y cazó trescientas zorras, y tomó teas, y turnó cola a cola, y puso una tea entre cada dos colas..."},
-    { q: "¿Quién fue la mujer que acogió a los espías de Josué en Jericó?", o: ["Rahab", "Rut", "Orfa", "Noemí"], a: 0, c: "JOSUÉ 2:1", vt: "Y Josué hijo de Nun envió desde Sitim dos espías secretamente, diciéndoles: Andad, reconozcad la tierra, y a Jericó. Y ellos fueron, y entraron en casa de una ramera que se llamaba Rahab, y posaron allí."},
-    { q: "¿Qué patriarca tuvo un encuentro místico luchando con un ángel en Peniel?", o: ["Abraham", "Isaac", "Jacob", "José"], a: 2, c: "GÉNESIS 32:24", vt: "Así se quedó Jacob solo; y luchó con él un varón hasta que rayaba el alba."},
-    { q: "¿Cuál fue el monte donde el profeta Elías desafió a los profetas de Baal?", o: ["Sinaí", "Carmelo", "Ararat", "Nebo"], a: 1, c: "1 REYES 18:19", vt: "Convoca, pues, a todo Israel a mí en el monte Carmelo, y a los cuatrocientos cincuenta profetas de Baal..."},
-    { q: "¿Qué evangelista escribió el relato dirigido específicamente a un noble llamado Teófilo?", o: ["Mateo", "Marcos", "Lucas", "Juan"], a: 2, c: "LUCAS 1:3", vt: "Me ha parecido también a mí, después de haber investigado con diligencia todas las cosas desde su origen, escribírtelas por orden, oh excelentísimo Teófilo."},
-    { q: "¿Quién fue el hombre que ayudó a bajar el cuerpo de Jesús de la cruz junto a José de Arimatea?", o: ["Nicodemo", "Pedro", "Juan", "Lázaro"], a: 0, c: "JUAN 19:39", vt: "También Nicodemo, el que antes había visitado a Jesús de noche, vino trayendo un compuesto de mirra y áloes..."},
-    { q: "¿Qué profeta vio un rollo volante y una medida efa en sus visiones nocturnas?", o: ["Zacarías", "Hageo", "Malaquías", "Amós"], a: 0, c: "ZACARÍAS 5:1", vt: "De nuevo alcé mis ojos y miré, y he aquí un rollo que volaba."},
-    { q: "¿Qué rey filisteo fingió demencia ante David cuando este huyó de Saúl?", o: ["Aquis", "Goliat", "Balac", "Eglón"], a: 0, c: "1 SAMUEL 21:13", vt: "Y cambió su manera de hablar delante de ellos, y se afiló en las manos de las puertas, y dejó correr su saliva por su barba."},
-    { q: "¿Cómo se llamaba el padre del rey David?", o: ["Isaí", "Booz", "Obed", "Fares"], a: 0, c: "RUT 1:22", vt: "Y Obed engendró a Isaí, e Isaí engendró a David."},
-    { q: "¿Qué profeta escribió acerca de que el justo vivirá por su fe?", o: ["Habacuc", "Sofonías", "Nahúm", "Jonás"], a: 0, c: "HABACUC 2:4", vt: "He aquí que aquel cuja alma no es recta, se enorgullece; mas el justo por su fe vivirá."},
-    { q: "¿Quién fue el hombre que bajó descolgado en una cesta por el muro de Damasco?", o: ["Pablo", "Pedro", "Bernabé", "Esteban"], a: 0, c: "HECHOS 9:25", vt: "Entonces los discípulos, tomándole de noche, le bajaron por el muro descolgándole en una canasta."},
-    { q: "¿Qué reina de Saba visitó al rey Salomón para probar su gran sabiduría?", o: ["Reina de Saba", "Vasti", "Ester", "Jezabel"], a: 0, c: "1 REYES 10:1", vt: "Oyendo la reina de Saba la fama que Salomón había alcanzado por el nombre de Jehová, vino a probarle con preguntas difíciles."},
-    { q: "¿Qué discípulo encontró una moneda en la boca de un pez para pagar el impuesto?", o: ["Pedro", "Juan", "Mateo", "Andrés"], a: 0, c: "MATEO 17:27", vt: "Sin embargo, para que no les ofendamos, ve al mar, y echa el anzuelo, y el primer pez que saques, tómale, y al abrirle la boca hallarás un estatero..."},
-    { q: "¿Cómo se llamaba el esposo de Priscila, colaborador del apóstol Pablo?", o: ["Aquila", "Apolos", "Timoteo", "Tito"], a: 0, c: "HECHOS 18:2", vt: "Y halló a un judío llamado Aquila, natural del Ponto, que hacía poco que había venido de Italia, con Priscila su mujer..."},
-    { q: "¿Qué profeta predijo que el lugar de nacimiento del Mesías sería Belén?", o: ["Miqueas", "Isaías", "Jeremías", "Amós"], a: 0, c: "MIQUEAS 5:2", vt: "Pero tú, Belén Efrata, pequeña para estar entre las familias de Judá, de ti me saldrá el que será Señor en Israel..."},
-    { q: "¿Qué rey mandó construir un muro alrededor de Jerusalén en tiempos de Nehemías?", o: ["Artajerjes", "Ciro", "Darío", "Nabucodonosor"], a: 0, c: "NEHEMÍAS 2:5", vt: "Y dije al rey: Si pleace al rey, y si tu siervo ha hallado gracia delante de ti, que me envíes a Judá, a la ciudad de los sepulcros de mis padres, y la edificaré."},
-    { q: "¿Qué patriarca compró la cueva de Macpela como sepultura para su esposa Sara?", o: ["Abraham", "Isaac", "Jacob", "Noé"], a: 0, c: "GÉNESIS 23:16", vt: "Entonces Abraham pesó a Efrón el dinero... y quedó la heredad de Efrón... la cueva que estaba en Macpela... como propiedad para sepultura."},
-    { q: "¿Qué profeta vio una visión de cuatro bestias gigantescas que surgían del mar?", o: ["Daniel", "Ezequiel", "Zacarías", "Juan"], a: 0, c: "DANIEL 7:3", vt: "Y cuatro grandes bestias, diferentes la una de la otra, subían del mar."},
-    { q: "¿Cuál era el nombre del monte donde el Señor libró a Israel de los ejércitos de Sisara?", o: ["Monte Tabor", "Monte Sinaí", "Monte Nebo", "Monte Carmelo"], a: 0, c: "JUECES 4:12", vt: "Y dieron aviso a Sisara que Barac hijo de Abinoam había subido al monte Tabor."},
-    { q: "¿Qué rey de Babilonia ordenó escribir una sentencia divina en la pared durante un banquete?", o: ["Belsasar", "Nabucodonosor", "Darío", "Ciro"], a: 0, c: "DANIEL 5:5", vt: "En aquella misma hora aparecieron los dedos de una mano de hombre, que escribía delante del candelero sobre lo yesoso de la pared del palacio real..."},
-    { q: "¿Qué mujer noble del Antiguo Testamento escondió a los espías israelitas bajo tallos de lino?", o: ["Rahab", "Abigail", "Mical", "Btisabé"], a: 0, c: "JOSUÉ 2:6", vt: "Mas ella los había hecho subir al terrado, y los había escondido entre los manojos de lino que tenía colocados en el terrado."},
-    { q: "¿Qué apóstol escribió una carta advirtiendo firmemente sobre el peligro de la lengua?", o: ["Santiago", "Pedro", "Juan", "Judas"], a: 0, c: "SANTIAGO 3:5", vt: "Así también la lengua es un miembro pequeño, pero se jacta de grandes cosas. He aquí, ¡cuán grande bosque enciende un pequeño fuego!"},
-    { q: "¿Quién fue el sacerdote que ungió a Saúl como primer rey de Israel?", o: ["Samuel", "Elí", "Aarón", "Zadoc"], a: 0, c: "1 SAMUEL 10:1", vt: "Tomando Samuel una redoma de aceite, la derramó sobre su cabeza, y le besó, y dijo: ¿No te ha ungido Jehová por príncipe sobre su pueblo Israel?"},
-    { q: "¿Qué profeta proclamó que el Espíritu de Dios se derramaría sobre toda carne en los últimos días?", o: ["Joel", "Amós", "Jonás", "Oseas"], a: 0, c: "JOEL 2:28", vt: "Y después de esto derramaré mi Espíritu sobre toda carne, y profetizarán vuestros hijos y vuestras hijas..."},
-    { q: "¿Qué animal usó el profeta Balaam cuando fue reprendido en el camino?", o: ["Un asno", "Un caballo", "Un león", "Un cordero"], a: 0, c: "NÚMEROS 22:23", vt: "Y el asna vio al ángel de Jehová, que estaba en el camino con su espada desenvainada en su mano..."},
-    { q: "¿Qué gobernante romano lavó públicamente sus manos ante el pueblo en el juicio de Jesús?", o: ["Poncio Pilato", "César Augusto", "Tiberio César", "Herodes Antipas"], a: 0, c: "MATEO 27:24", vt: "Viendo Pilato que nada absequía, antes se hacía más alboroto, tomó agua y se lavó las manos delante del pueblo..."},
-    { q: "¿Qué nombre recibe el valle donde Josué detuvo milagrosamente el sol y la luna?", o: ["Valle de Ajalón", "Valle de Sidim", "Valle de Elah", "Valle de Hinom"], a: 0, c: "JOSUÉ 10:12", vt: "Sol, detente en Gabaón; Y tú, luna, en el valle de Ajalón."},
-    { q: "¿Qué profeta menor exhortó al pueblo a reedificar el templo diciendo '¿Es tiempo para vosotros de habitar en vuestras casas artesonadas...?'?", o: ["Hageo", "Zacarías", "Malaquías", "Sofonías"], a: 0, c: "HAGEO 1:4", vt: "¿Es para vosotros tiempo, para vosotros, de habitar en vuestras casas artesonadas, y esta casa está desierta?"},
-    { q: "¿Qué hijo del rey Saúl mantuvo un pacto de lealtad profunda y amistad con David?", o: ["Jonatán", "Is-boset", "Mical", "Abinadab"], a: 0, c: "1 SAMUEL 18:3", vt: "Y pactaron alianza Jonatán y David, porque le amaba como a sí mismo."},
-    { q: "¿Qué rey mandó a arrojar al profeta Jeremías a un pozo cenagoso?", o: ["Sedequías", "Joacim", "Josías", "Manasés"], a: 0, c: "JEREMÍAS 38:6", vt: "Tomaron a Jeremías y lo echaron en la cisterna de Malquías hijo de Mlec, que estaba en el patio de la cárcel; y descolgaron a Jeremías con sogas."},
-    { q: "¿Qué apóstol experimentó una visión de un lienzo bajando del cielo con animales limpios e impuros?", o: ["Pedro", "Pablo", "Juan", "Santiago"], a: 0, c: "HECHOS 10:11-12", vt: "Y vio el cielo abierto, y que descendía algo semejante a un gran lienzo, que atado de las cuatro puntas era bajado a la tierra; en el cual había de todos los animales cuadrúpedos de la tierra..."},
-    { q: "¿Quién fue el patriarca que engendró a Isaac a la edad avanzada de cien años?", o: ["Abraham", "Noé", "Jacob", "Adán"], a: 0, c: "GÉNESIS 21:5", vt: "Y era de cien años Abraham cuando nació su hijo Isaac."},
-    { q: "¿Qué profeta fue consolado por un ángel con una torta cocida sobre ascuas y una vasija de agua?", o: ["Elías", "Eliseo", "Jeremías", "Ezequiel"], a: 0, c: "1 REYES 19:6", vt: "Y miró, y he aquí cabecera una torta cocida sobre las ascuas, y una vasija de agua; y comió y bebió, y volvió a acostarse."},
-    { q: "¿Qué mujer virtuosa y sabia impidió que David se vengara violentamente de Nabal?", o: ["Abigail", "Mical", "Batesabé", "Abisag"], a: 0, c: "1 SAMUEL 25:32-33", vt: "Y dijo David a Abigail: Bendito sea Jehová Dios de Israel, que te envió hoy a que me encontrases..."},
-    { q: "¿Qué libro histórico relata la trágica historia de los jueces y la idolatría de la tribu de Dan?", o: ["Jueces", "Josué", "Rut", "Samuel"], a: 0, c: "JUECES 18:30", vt: "Y los hijos de Dan establecieron para sí la escultura; y Jonatán hijo de Gersón, hijo de Manasés, él y sus hijos fueron sacerdotes de la tribu de Dan..."},
-    { q: "¿Qué líder espiritual dirigió la lectura pública de la ley ante los exiliados retornados en la plaza de Jerusalén?", o: ["Esdras", "Nehemías", "Zorobabel", "Josué"], a: 0, c: "ESDRAS 7:6", vt: "Este Esdras subió de Babilonia. Era escriba versado en la ley de Moisés, que Jehová Dios de Israel habí dado..."},
-    { q: "¿Qué discípulo fue conocido inicialmente como 'el que duda' pero exclamó '¡Señor mío y Dios mío!'?", o: ["Tomás", "Felipe", "Andrés", "Bartolomé"], a: 0, c: "JUAN 20:28", vt: "Entonces Tomás respondió y le dijo: ¡Señor mío, y Dios mío!"}
-  ],
-  medium: [
-    { q: "¿En qué monte reposó el arca de Noé al cesar el diluvio?", o: ["Sinaí", "Ararat", "Carmelo", "Olivos"], a: 1, c: "GÉNESIS 8:4", vt: "Y reposó el arca en el mes séptimo, a los diecisiete días del mes, sobre los montes de Ararat."},
-    { q: "¿Quién fue elegido por suerte para reemplazar al apóstol Judas Iscariote?", o: ["Matías", "Pablo", "Bernabé", "Silas"], a: 0, c: "HECHOS 1:26", vt: "Y les echaron suertes, y la suerte cayó sobre Matías; y fue contado con los once apóstoles."},
-    { q: "¿Qué profeta fue arrebatado al cielo en un carro y torbellino de fuego?", o: ["Eliseo", "Elías", "Isaías", "Enoc"], a: 1, c: "2 REYES 2:11", vt: "Y aconteció que yendo ellos y hablando, he aquí un carro de fuego con caballos de fuego apartó a los dos; y Elías subió al cielo en un torbellino."},
-    { q: "¿Cómo se llamaba la suegra fiel de Rut la moabita?", o: ["Orfa", "Sara", "Noemí", "Ana"], a: 2, c: "RUT 1:19", vt: "Anduvieron, pues, ellas dos hasta que llegaron a Belén. Y aconteció que, cuando entraron en Belén, toda la ciudad se alborotó por causa de ellas, y decían: ¿No es ésta Noemí?"},
-    { q: "¿Quién es reconocido históricamente como el primer mártir de la iglesia cristiana?", o: ["Esteban", "Santiago", "Felipe", "Pedro"], a: 0, c: "HECHOS 7:59", vt: "Y apedreaban a Esteban, mientras él invocaba y decía: Señor Jesús, recibe mi espíritu."},
-    { q: "¿Camino a qué ciudad fue cegado Saulo de Tarso por la luz celestial?", o: ["Jerusalén", "Damasco", "Antioquía", "Tarso"], a: 1, c: "HECHOS 9:3", vt: "Mas yendo por el camino, aconteció que al llegar cerca de Damasco, repentinamente le rodeó un resplandor de luz del cielo..."},
-    { q: "¿Qué mujer profetisa gobernaba como jueza en Israel junto a Barac?", o: ["Jael", "Débora", "Atalía", "Huldah"], a: 1, c: "JUECES 4:4", vt: "Gobernaba en aquel tiempo a Israel una mujer, Débora, profetisa, mujer de Lapidot."},
-    { q: "¿Qué profeta confrontó directamente al rey David tras su pecado con Betsabé?", o: ["Samuel", "Natán", "Gad", "Elías"], a: 1, c: "2 SAMUEL 12:7", vt: "Entonces dijo Natán a David: Tú eres aquel hombre. Así ha dicho Jehová Dios de Israel..."},
-    { q: "¿En qué huerto específico oró Jesús con angustia antes de ser entregado?", o: ["Gólgota", "Getsemaní", "Betania", "Emaús"], a: 1, c: "MATEO 26:36", vt: "Entonces llegó Jesús con ellos a un lugar que se llama Getsemaní, y dijo a sus discípulos: Sentaos aquí, entre tanto que voy allí y oro."},
-    { q: "¿Qué profeta vio en visión un valle lleno de huesos secos que cobraron vida?", o: ["Isaías", "Jeremías", "Ezequiel", "Daniel"], a: 2, c: "EZEQUIEL 37:1", vt: "La mano de Jehová vino sobre mí, y me llevó en el Espíritu de Jehová, y me puso en medio de un valle que estaba lleno de huesos."},
-    { q: "¿Quién fue obligado por los soldados romanos a llevar la cruz de Jesús?", o: ["José de Arimatea", "Simón de Cirene", "Nicodemo", "Cleofás"], a: 1, c: "LUCAS 23:26", vt: "Y le trajeron, tomaron a cierto Simón de Cirene, que venía del campo, y le pusieron encima la cruz para que la llevase tras Jesús."},
-    { q: "¿Qué juez de Israel redujo drásticamente su ejército a solo 300 hombres por mandato divino?", o: ["Sansón", "Gedeón", "Jefté", "Barac"], a: 1, c: "JUECES 7:7", vt: "Entonces Jehová dijo a Gedeón: Con estos trescientos hombres que lamieron el agua os salvaré, y entregaré a los madianitas en tus manos..."},
-    { q: "¿A qué fariseo principal le explicó Jesús la necesidad de nacer de nuevo?", o: ["Nicodemo", "Zaqueo", "Simón", "Gamaliel"], a: 0, c: "JUAN 3:3", vt: "Respondió Jesús y le dijo: De cierto, de cierto te digo, que el que no naciere de nuevo, no puede ver el reino de Dios."},
-    { q: "¿Cómo se llamaba el jefe de los publicanos que subió a un árbol sicómoro para ver a Jesús?", o: ["Zaqueo", "Lázaro", "Bartimeo", "Cornelio"], a: 0, c: "LUCAS 19:2-4", vt: "Y he aquí un varón llamado Zaqueo, el cual era jefe de los publicanos, y rico... y corriendo delante, subió a un árbol sicómoro para verle..."},
-    { q: "¿Cuántos años exactos anduvo el pueblo de Israel peregrinando por el desierto?", o: ["20", "30", "40", "50"], a: 2, c: "NÚMEROS 14:33", vt: "Y vuestros hijos andarán pastoreando en el desierto cuarenta años, y sufrirán vuestras rebeldías, hasta que vuestros cuerpos sean consumidos en el desierto."},
-    { q: "¿Qué jóvenes compañeros de Daniel fueron arrojados al horno de fuego?", o: ["Daniel e Isaías", "Sadrac, Mesac y Abed-nego", "Ezequiel y Baruc", "Hánan y David"], a: 1, c: "DANIEL 3:20", vt: "Y mandó a hombres muy robustos de su ejército que atasen a Sadrac, Mesac y Abed-nego, para echarlos en el horno de fuego ardiendo."},
-    { q: "¿Qué rey babilónico perdió la razón y comió hierba como los bueyes?", o: ["Ciro", "Darío", "Nabucodonosor", "Belsasar"], a: 2, c: "DANIEL 4:33", vt: "En la misma hora se cumplió la palabra sobre Nabucodonosor, y fue echado de entre los hombres; y comía hierba como los bueyes..."},
-    { q: "¿A qué tribu específica de Israel pertenecía el apóstol Pablo?", o: ["Judá", "Leví", "Benjamín", "Dan"], a: 2, c: "FILIPENSES 3:5", vt: "Circuncidado al octavo día, del linaje de Israel, de la tribu de Benjamín, hebreo de hebreos; en cuanto a la ley, fariseo."},
-    { q: "¿Qué profeta valiente reconstruyó las murallas derribadas de Jerusalén?", o: ["Esdras", "Nehemías", "Zorobabel", "Mardoqueo"], a: 1, c: "NEHEMÍAS 2:17", vt: "Les dije, pues: Vosotros veis el mal en que estamos, que Jerusalén está desierta, y sus puertas consumidas por el fuego; venid, y edifiquemos el muro..."},
-    { q: "¿Qué costurera piadosa llamada Tabita fue resucitada milagrosamente por el apóstol Pedro?", o: ["Dorcas", "Marta", "Lidia", "Priscila"], a: 0, c: "HECHOS 9:36,40", vt: "Había entonces en Jope una discípula llamada Tabita, que traducido es Dorcas... Entonces Pedro, sacando a todos, se postró y oró... Tabita, levántate."},
-    { q: "¿Qué joven creyente cayó dormido desde un tercer piso mientras Pablo predicaba largamente?", o: ["Tito", "Eutico", "Timoteo", "Tiquico"], a: 1, c: "HECHOS 20:9", vt: "Un joven llamado Eutico, que estaba sentado en la ventana, por cuanto Pablo disertaba largamente, fue rendido de un sueño profundo... cayó del tercer piso..."},
-    { q: "¿A qué profeta le ordenó Dios casarse simbólicamente con una mujer infiel?", o: ["Amós", "Oseas", "Miqueas", "Joel"], a: 1, c: "OSEAS 1:2", vt: "El principio de la palabra de Jehová por medio de Oseas. Dijo Jehová a Oseas: Ve, tómate una mujer fornicaria, e hijos de fornicación..."},
-    { q: "¿Qué profeta anunció con precisión milimétrica que el Mesías nacería en Belén Éfrata?", o: ["Miqueas", "Isaías", "Jeremías", "Zacarías"], a: 0, c: "MIQUEAS 5:2", vt: "Pero tú, Belén Efrata, pequeña para estar entre las familias de Judá, de ti me saldrá el que será Señor en Israel..."},
-    { q: "¿Quién era el anciano sacerdote que cuidaba y educó al niño Samuel en Silo?", o: ["Elí", "Aarón", "Eleazar", "Finees"], a: 0, c: "1 SAMUEL 3:1", vt: "El joven Samuel ministraba a Jehová en presencia de Elí; y la palabra de Jehová escaseaba en aquellos días..."},
-    { q: "¿Qué general extranjero y leproso fue sanado al sumergirse siete veces en el Jordán?", o: ["Naamán", "Ben-hadad", "Hazael", "Senaquerib"], a: 0, c: "2 REYES 5:14", vt: "Él entonces descendió, y se lavó siete veces en el Jordán, conforme a la palabra del varón de Dios; y su carne se volvió como la carne de un niño..."},
-    { q: "¿En qué cueva específica se refugió el rey David huyendo de la persecución de Saúl?", o: ["Adulam", "Macpela", "Engadi", "Marea"], a: 0, c: "1 SAMUEL 22:1", vt: "Yéndose David de allí, huyó a la cueva de Adulam; y cuando sus hermanos y toda la casa de su padre lo supieron, y fueron allá a él."},
-    { q: "¿Qué profeta es ampliamente conocido y recordado como el 'profeta llorón'?", o: ["Jeremías", "Isaías", "Ezequiel", "Daniel"], a: 0, c: "JEREMÍAS 9:1", vt: "¡Oh, si mi cabeza se volviese aguas, y mis ojos fuentes de lágrimas, para llorar día y noche los muertos de la hija de mi pueblo!"},
-    { q: "¿Qué apóstol recibió el afectuoso sobrenombre de 'Hijo de Consolación'?", o: ["Bernabé", "Pablo", "Silas", "Marcos"], a: 0, c: "HECHOS 4:36", vt: "Entonces José, a quien los apóstoles pusieron por sobrenombre Bernabé (que traducido es, Hijo de consolación), levita, natural de Chipre."},
-    { q: "¿Qué rey piadoso de Judá vio su vida milagrosamente prolongada por 15 años tras orar?", o: ["Ezequías", "Josías", "Uzías", "Manasés"], a: 0, c: "2 REYES 20:6", vt: "Y añadiré a tus días quince años, y te libraré a ti y a esta ciudad de mano del rey de Asiria..."},
-    { q: "¿Qué devota vendedora de púrpura abrió su hogar a Pablo y sus compañeros en Filipos?", o: ["Lidia", "Priscila", "Dorcas", "Febe"], a: 0, c: "HECHOS 16:14", vt: "Entonces una mujer llamada Lidia, vendedora de púrpura, de la ciudad de Tiatira, que adoraba a Dios, estaba oyendo... el Señor abrió el corazón de ella..."},
-    { q: "¿Qué matrimonio amigo de Pablo trabajaba activamente en el oficio de hacer tiendas?", o: ["Aquila y Priscila", "Ananías y Safira", "Andrónico y Junias", "Filemón y Apia"], a: 0, c: "HECHOS 18:2-3", vt: "Y halló a un judío llamado Aquila, natural del Ponto... con Priscila su mujer... y como era del mismo oficio, se quedó con ellos y trabajaban."},
-    { q: "¿Quién era el sumo sacerdote principal que presidió el juicio nocturno contra Jesús?", o: ["Caifás", "Anás", "Gamaliel", "Tertulo"], a: 0, c: "MATEO 26:57", vt: "Y los que prendieron a Jesús le llevaron al sumo sacerdote Caifás, donde los escribas y los ancianos estaban reunidos."},
-    { q: "¿Qué discípulo desenvainó su espada en Getsemaní y cortó la oreja a Malco?", o: ["Pedro", "Juan", "Santiago", "Andrés"], a: 0, c: "JUAN 18:10", vt: "Entonces Simón Pedro, que tenía una espada, la desenvainó, e hirió al siervo del sumo sacerdote, y le cortó la oreja derecha. Y el siervo se llamaba Malco."},
-    { q: "¿Cómo se llamaba la aldea a la que se dirigían los dos discípulos entristecidos al encontrarse con Jesús resucitado?", o: ["Emaús", "Betania", "Jericó", "Sicar"], a: 0, c: "LUCAS 24:13", vt: "Y he aquí, dos de ellos iban el mismo día a una aldea llamada Emaús, que estaba a sesenta estadios de Jerusalén."},
-    { q: "¿En qué libro histórico del Antiguo Testamento no se menciona explícitamente el nombre de Dios?", o: ["Ester", "Rut", "Esdras", "Nehemías"], a: 0, c: "LIBRO DE ESTER", vt: "Aunque la providencia divina obra en todo el relato para salvar al pueblo judío, el nombre explícito de Dios no aparece registrado en el texto hebreo."},
-    { q: "¿Qué diácono y evangelista explicó las Escrituras a un eunuco etíope en el desierto?", o: ["Felipe", "Esteban", "Procoro", "Nicanor"], a: 0, c: "HECHOS 8:35", vt: "Entonces Felipe, abriendo su boca, y comenzando desde esta escritura, le anunció el evangelio de Jesús."},
-    { q: "¿Quién fue el conspirador persa que mandó construir una horca alta para Mardoqueo?", o: ["Amán", "Sanbalat", "Tobías", "Artajerjes"], a: 0, c: "ESTER 5:14", vt: "Y le dijo Zeres su mujer y todos sus amigos: Hágase una horca de cincuenta codos de altura, y mañana di al rey que cuelguen a Mardoqueo en ella..."},
-    { q: "¿Qué profeta vio visiones divinas junto al río Quebar en medio de los cautivos?", o: ["Ezequiel", "Daniel", "Jeremías", "Isaías"], a: 0, c: "EZEQUIEL 1:1", vt: "Aconteció en el año treinta, en el mes cuarto, a los cinco días del mes, estando yo en medio de los cautivos junto al río Quebar, que los cielos se abrieron..."},
-    { q: "¿A qué joven discípulo llamó Pablo reiteradamente 'verdadero hijo en la fe'?", o: ["Timoteo", "Tito", "Epafras", "Filemón"], a: 0, c: "1 TIMOTEO 1:2", vt: "a Timoteo, verdadero hijo en la fe: Gracia, misericordia y paz, de Dios nuestro Padre y de Cristo Jesús nuestro Señor."},
-    { q: "¿En qué ciudad mediterránea encalló por completo la nave en la que viajaba Pablo prisionero?", o: ["Malta", "Creta", "Chipre", "Rodas"], a: 0, c: "HECHOS 28:1", vt: "Estando ya a salvo, supimos que la isla se llamaba Malta. Y los naturales nos trataron con no poca humanidad..."},
-    { q: "¿Qué rey impío de Judá mandó quemar públicamente el rollo profético escrito por Jeremías?", o: ["Joacim", "Sedequías", "Josías", "Manasés"], a: 0, c: "JEREMÍAS 36:23", vt: "Y cuando Jehudi había leído tres o cuatro planas, las rasgó el rey con un cortaplumas de escribir, y las echó en el fuego... hasta que todo el rollo se consumió."},
-    { q: "¿Qué juez de Israel derrotó a los madianitas usando cántaros vacíos y antorchas encendidas?", o: ["Gedeón", "Sansón", "Jefté", "Otoniel"], a: 0, c: "JUECES 7:19-20", vt: "Y llegaron Gedeón y los cien hombres que iban con él... y quebraron los cántaros que traían en sus manos... y clamaron: ¡La espada de Jehová y de Gedeón!"},
-    { q: "¿Qué profeta fue castigado con mudez temporal por no creer el anuncio del nacimiento de su hijo?", o: ["Zacarías", "Simeón", "Eliseo", "Natán"], a: 0, c: "LUCAS 1:20", vt: "Y ahora quedarás mudo y no podrás hablar, hasta el día en que esto se haga, por cuanto no creíste mis palabras..."},
-    { q: "¿Qué mujer noble salvó a su sobrino Joás ocultándolo de la masacre de Atalía?", o: ["Josaba", "Noemí", "Hulda", "Abigail"], a: 0, c: "2 REYES 11:2", vt: "Pero Josaba, hija del rey Joram, hermana de Ocozías, tomó a Joás hijo de Ocozías y lo sacó de entre los hijos del rey a quienes mataban... y lo escondeu... de delante de Atalía."},
-    { q: "¿Qué rey de Babilonia sitió Jerusalén y se llevó los utensilios del templo original?", o: ["Nabucodonosor", "Belsasar", "Ciro", "Darío"], a: 0, c: "2 REYES 24:13", vt: "Y sacó de allí todos los tesoros de la casa de Jehová, y los tesoros de la casa del rey, y rompió en pedazos todos los utensilios de oro..."},
-    { q: "¿Cómo se llamaba el monte donde se enfrentaron Elías y los profetas de Baal?", o: ["Monte Carmelo", "Monte Sinaí", "Monte Horeb", "Monte Olivos"], a: 0, c: "1 REYES 18:20", vt: "Entonces Acab convocó a todos los hijos de Israel, y reunió a los profetas en el monte Carmelo."},
-    { q: "¿Qué discípulo reemplazó al traidor Judas Iscariote en el ministerio apostólico?", o: ["Matías", "Bernabé", "Silas", "Justo"], a: 0, c: "HECHOS 1:26", vt: "Y les echaron suertes, y la suerte cayó sobre Matías; y fue contado con los once apóstoles."},
-    { q: "¿Qué profeta anunció que el reino de Babilonia caería tras 70 años de cautiverio?", o: ["Jeremías", "Isaías", "Ezequiel", "Daniel"], a: 0, c: "JEREMÍAS 25:11", vt: "Toda esta tierra será desolada y en ruinas; y servirán estas naciones al rey de Babilonia setenta años."},
-    { q: "¿Qué hombre piadoso de la tribu de Leví fue el padre de Moisés y Aarón?", o: ["Amram", "Coat", "Leví", "Izhar"], a: 0, c: "ÉXODO 6:20", vt: "Y Amram tomó por mujer a Jocabed su tía, la cual dio a luz a Aarón y a Moisés."},
-    { q: "¿Qué rey extranjero ordenó que los judíos regresaran a Jerusalén para reedificar la casa de Dios?", o: ["Ciro", "Artajerjes", "Darío", "Asuero"], a: 0, c: "2 CRÓNICAS 36:23", vt: "Así dice Ciro rey de Persia: Jehová el Dios de los cielos me ha dado todos los reinos de la tierra, y me ha mandado que le edifique casa en Jerusalén..."},
-    { q: "¿Qué líder militar israelita pidió una señal a Dios usando un vellón de lana?", o: ["Gedeón", "Barac", "Jefté", "Josué"], a: 0, c: "JUECES 6:36", vt: "Y dijo Gedeón a Dios: Si has de salvar a Israel por mi mano, como has dicho, he aquí yo pondré un vellón de lana en la era..."},
-    { q: "¿Qué joven israelita fue ascendido a primer ministro de Egipto tras interpretar los sueños de Faraón?", o: ["José", "Daniel", "Moisés", "David"], a: 0, c: "GÉNESIS 41:41", vt: "Dijo además Faraón a José: He aquí yo te he puesto sobre toda la tierra de Egipto."}
-    { q: "¿Quién fue lanzado al foso de los leones por continuar orando a Dios a pesar del decreto real?", o: ["Daniel", "David", "José", "Elías"], a: 0, c: "DANIEL 6:16", vt: "Y el rey mandó, y trajeron a Daniel, y le echaron en el foso de los leones..." },
-    { q: "¿Cuál es el último libro del Antiguo Testamento?", o: ["Malaquías", "Zacarías", "Hageo", "Nahúm"], a: 0, c: "MALAQUÍAS 1:1", vt: "Profecía de la palabra de Jehová contra Israel, por medio de Malaquías." },
-    { q: "¿Cuántos días y noches llovió de forma ininterrumpida durante el diluvio universal en tiempos de Noé?", o: ["7 días", "40 días", "100 días", "365 días"], a: 1, c: "GÉNESIS 7:12", vt: "Y hubo lluvia sobre la tierra cuarenta días y cuarenta noches." },
-    { q: "¿En qué monte entregó Dios las tablas de la ley a Moisés?", o: ["Monte Carmelo", "Monte Nebo", "Monte Sinaí", "Monte de los Olivos"], a: 2, c: "ÉXODO 19:20", vt: "Y descendió Jehová sobre el monte Sinaí, sobre la cumbre del monte..." },
-    { q: "¿Cómo se llamaba el hermano mayor de Moisés que sirvió como su portavoz ante el Faraón?", o: ["Josué", "Aarón", "Caleb", "Hur"], a: 1, c: "ÉXODO 4:14", vt: "Entonces Jehová se enojó contra Moisés, y dijo: ¿No conozco yo a tu hermano Aarón levita, y que él hablará?" },
-    { q: "¿Qué profeta fue alimentado por cuervos junto al arroyo de Querit?", o: ["Eliseo", "Isaías", "Jeremías", "Elías"], a: 3, c: "1 REYES 17:6", vt: "Y los cuervos le traían pan y carne por la mañana, y pan y carne por la tarde..." },
-    { q: "¿Qué juez de Israel derribó el altar de Baal de su padre y redujo su ejército a 300 hombres?", o: ["Sansón", "Gedeón", "Jefté", "Aod"], a: 1, c: "JUECES 7:7", vt: "Entonces Jehová dijo a Gedeón: Con estos trescientos hombres que lamieron el agua os salvaré..." },
-    { q: "¿Quién sucedió a Moisés en el liderazgo para introducir al pueblo de Israel en la Tierra Prometida?", o: ["Caleb", "Eleazar", "Josué", "Samuel"], a: 2, c: "JOSUÉ 1:1", vt: "Aconteció después de la muerte de Moisés siervo de Jehová, que Jehová habló a Josué..." },
-    { q: "¿Qué mujer invitó a Eliseo a comer y preparó una habitación especial en su casa para él?", o: ["La sulamita", "La viuda de Sarepta", "La sunamita", "Abisag"], a: 2, c: "2 REYES 4:8", vt: "Aconteció también un día que pasaba Eliseo por Sunem; y había allí una mujer importante..." },
-    { q: "¿Cómo se llamaban los dos hijos de Elí que actuaban con maldad en el tabernáculo de Silo?", o: ["Ofni y Finees", "Nadab y Abiú", "Mahón y Quelión", "Joel y Abías"], a: 0, c: "1 SAMUEL 2:12", vt: "Los hijos de Elí eran hombres impíos, y no tenían conocimiento de Jehová." },
-    { q: "¿Qué rey de Babilonia sitió Jerusalén y se llevó los utensilios de oro del templo de Dios?", o: ["Ciro", "Darío", "Nabucodonosor", "Artajerjes"], a: 2, c: "2 REYES 24:13", vt: "Y sacó de allí todos los tesoros de la casa de Jehová, y los tesoros de la casa del rey..." },
-    { q: "¿Qué profeta vio la visión de un valle lleno de huesos secos que cobraron vida?", o: ["Isaías", "Jeremías", "Ezequiel", "Daniel"], a: 2, c: "EZEQUIEL 37:1", vt: "La mano de Jehová vino sobre mí, y me llevó en el Espíritu de Jehová, y me puso en medio de un valle..." },
-    { q: "¿Cuál de los apóstoles era conocido como el que dudó de la resurrección hasta ver las llagas?", o: ["Felipe", "Tomás", "Andrés", "Mateo"], a: 1, c: "JUAN 20:24", vt: "Tomás, uno de los doce, llamado Dídimo, no estaba con ellos cuando Jesús vino." },
-    { q: "¿En qué ciudad realizaba su ministerio el profeta Jonás antes de huir hacia Tarsis?", o: ["Nínive", "Damasco", "Samaria", "Babilonia"], a: 0, c: "JONÁS 1:2", vt: "Levántate y ve a Nínive, gran ciudad, y pregona contra ella..." },
-    { q: "¿Qué reina persa intercedió valientemente ante el rey Asuero para salvar a los judíos de un decreto de muerte?", o: ["Vasti", "Ester", "Abisag", "Rut"], a: 1, c: "ESTER 7:3", vt: "Entonces la reina Ester respondió y dijo: Oh rey, si he hallado gracia en tus ojos... séame dada mi vida..." },
-    { q: "¿Qué joven pastor fue ungido como rey de Israel por el profeta Samuel mientras cuidaba las ovejas?", o: ["Saúl", "Salomón", "David", "Absalón"], a: 2, c: "1 SAMUEL 16:13", vt: "Y Samuel tomó el cuerno del aceite, y lo ungió en medio de sus hermanos..." },
-    { q: "¿Cómo se llamaba el monte donde Elías desafió a los 450 profetas de Baal?", o: ["Monte Horeb", "Monte Carmelo", "Monte Moriah", "Monte Tabor"], a: 1, c: "1 REYES 18:19", vt: "Convoca, pues, a todo Israel a mí en el monte Carmelo, y a los cuatrocientos cincuenta profetas de Baal..." },
-    { q: "¿Qué personaje bíblico escribió la mayor parte del libro de los Salmos?", o: ["Asaf", "Moisés", "Salomón", "David"], a: 3, c: "LIBRO DE SALMOS", vt: "Salmo de David." },
-    { q: "¿Qué líder dirigió la reconstrucción de las murallas de Jerusalén en tan solo 52 días?", o: ["Esdras", "Nehemías", "Zorobabel", "Mardoqueo"], a: 1, c: "NEHEMÍAS 6:15", vt: "Fueron terminados los muros el veinticinco del mes de Elul, en cincuenta y dos días." },
-    { q: "¿Qué diácono de la iglesia primitiva se convirtió en el primer mártir cristiano al ser apedreado?", o: ["Felipe", "Esteban", "Bernabé", "Marcos"], a: 1, c: "HECHOS 7:59", vt: "Y apedreaban a Esteban, mientras él invocaba y decía: Señor Jesús, recibe mi espíritu." }
-  ],
-  hard: [
-    { q: "¿Quién era el misterioso rey de Salem y sacerdote del Dios Altísimo que bendijo a Abram?", o: ["Abimelec", "Melquisedec", "Jetro", "Balsazar"], a: 1, c: "GÉNESIS 14:18", vt: "Entonces Melquisedec, rey de Salem y sacerdote del Dios Altísimo, sacó pan y vino... y le bendijo, diciendo: Bendito sea Abram del Dios Altísimo..."},
-    { q: "¿Cuál se reconoce formalmente como la carta más breve por recuento de palabras en el Nuevo Testamento?", o: ["2 Juan", "3 Juan", "Judas", "Filemón"], a: 0, c: "2 JUAN 1:1", vt: "El anciano a la señora elegida y a sus hijos, a quienes yo amo en la verdad..."},
-    { q: "¿Cómo se llamaba exactamente el padre de Josué, servidor personal de Moisés?", o: ["Nun", "Caleb", "Ur", "Eleazar"], a: 0, c: "JOSUÉ 1:1", vt: "Aconteció después de la muerte de Moisés siervo de Jehová, que Jehová habló a Josué hijo de Nun, servidor de Moisés, diciendo..."},
-    { q: "¿Qué rey de Judá fue herido repentinamente de lepra por intentar usurpar funciones sacerdotales?", o: ["Uzías", "Ezequías", "Josías", "Manasés"], a: 0, c: "2 CRÓNICAS 26:19", vt: "Entonces Uzías se llenó de ira; y tenía un incensario en su mano para encender incienso... y la lepra le brotó en la frente delante de los sacerdotes..."},
-    { q: "¿Cómo se llamaban específicamente las dos grandes columnas de bronce situadas en el pórtico del Templo?", o: ["Jaquín y Boaz", "Urim y Tumim", "Sinaí y Horeb", "Alfa y Omega"], a: 0, c: "1 REYES 7:21", vt: "Efectivamente, levantó las columnas en el pórtico del templo; y levantó la columna derecha, y le puso por nombre Jaquín; y levantó la columna izquierda, y llamó su nombre Boaz."},
-    { q: "¿Qué profeta menor registró que el futuro Gobernador de Israel procedería de la pequeña Belén Éfrata?", o: ["Miqueas", "Isaías", "Jeremías", "Zacarías"], a: 0, c: "MIQUEAS 5:2", vt: "Pero tú, Belén Efrata, pequeña para estar entre las familias de Judá, de ti me saldrá el que será Señor en Israel..."},
-    { q: "¿Cómo se llamaba el codicioso criado de Eliseo que terminó heredando la lepra de Naamán?", o: ["Giezi", "Hazael", "Jahaziel", "Baruc"], a: 0, c: "2 REYES 5:27", vt: "Por tanto, la lepra de Naamán se te pegará a ti y a tu descendencia para siempre. Y salió de delante de él leproso, blanco como la nieve."},
-    { q: "¿Qué valiente mujer israelita mató al general opresor Sísara clavándole una estaca en las sienes?", o: ["Débora", "Jael", "Atalía", "Sefora"], a: 1, c: "JUECES 4:21", vt: "Pero Jael mujer de Héber tomó una estaca de la tienda, y poniendo un mazo en su mano, se le acercó calladamente y le metió la estaca por las sienes, enracimándola en la tierra..."},
-    { q: "¿Qué joven sirvienta y portera de la casa de María se quedó sin abrir la puerta a Pedro de la emoción?", o: ["Rode", "Lidia", "Dorcas", "Sintique"], a: 0, c: "HECHOS 12:13-14", vt: "Cuando llamó Pedro a la puerta del patio, salió a escuchar una muchacha llamada Rode... y sin abrir la puerta, de gozo corrió adentro, y dio la nueva de que Pedro estaba a la puerta."},
-    { q: "¿Qué profeta menor escribió una visión íntegramente dedicada al solemne juicio divino sobre Edom?", o: ["Abdías", "Sofonías", "Hageo", "Miqueas"], a: 0, c: "ABDÍAS 1:1", vt: "Visión de Abdías. Jehová el Señor ha dicho así cuanto a Edom: He oído el pregón de Jehová, y mensajero ha sido enviado por las naciones: Levantaos, y levantémonos contra ella en batalla."},
-    { q: "¿Cómo se llamaba el padre del rey Saúl, perteneciente a la tribu de Benjamín?", o: ["Cis", "Abner", "Ner", "Zeror"], a: 0, c: "1 SAMUEL 9:1", vt: "Había un varón de Benjamín, valeroso, cuyo nombre era Cis, hijo de Abiel, hijo de Zeror, hijo de Becorat, hijo de Afía, hijo de un benjaminita."},
-    { q: "¿Qué juez israelita hizo un voto trágicamente apresurado antes de salir a su campaña contra los amonitas?", o: ["Gedeón", "Jefté", "Sansón", "Eud"], a: 1, c: "JUECES 11:30-31", vt: "Y Jefté hizo voto a Jehová, diciendo: Si entregares a los amonitas en mis manos, cualquiera que saliere de las puertas de las mi casa a recibirme... lo ofreceré en holocausto."},
-    { q: "¿Qué malvado rey destruyó con un cortaplumas el rollo profético de Jeremías?", o: ["Joacim", "Sedequías", "Josías", "Manasés"], a: 0, c: "JEREMÍAS 36:23", vt: "Y cuando Jehudi había leído tres o cuatro planas, las rasgó el rey con un cortaplumas de escribir, y las echó en el fuego que había en el brasero..."},
-    { q: "¿Cómo se llamaban exactamente los tres amigos que acudieron a consolar y dialogar con Job?", o: ["Elifaz, Bildad y Zofar", "Sadrac, Mesac y Abed", "Hánan, Azarías y Misael", "Sem, Cam y Jafet"], a: 0, c: "JOB 2:11", vt: "Y tres amigos de Job, Elifaz temanita, Bildad suhita, y Zofar naamatita, oyeron todo este mal que le había sobrevenido... y vinieron cada uno de su lugar."},
-    { q: "¿En qué capítulo específico del libro del profeta Isaías se halla el célebre pasaje del Varón de Dolores?", o: ["Isaías 40", "Isaías 53", "Isaías 60", "Isaías 66"], a: 1, c: "ISAÍAS 53:3", vt: "Despreciado y desechado entre los hombres, varón de dolores, experimentado en quebranto; y como que escondimos de él el rostro, fue menospreciado, y no lo estimamos."},
-    { q: "¿Qué consejero personal de David cometió traición y terminó ahorcándose al ser rechazado su plan?", o: ["Ahitofel", "Husai", "Joab", "Simei"], a: 0, c: "2 SAMUEL 17:23", vt: "Pero Ahitofel, viendo que no se había puesto por obra su consejo, enalbardó su asno, y se levantó y se fue a su casa en su ciudad; y después de poner en orden su casa, se ahorcó y murió..."},
-    { q: "¿Qué monarca compró formalmente el monte de Samaria a un hombre llamado Semer por dos talentos de plata?", o: ["Omri", "Jeroboam", "Baasa", "Acab"], a: 0, c: "1 REYES 16:24", vt: "Y compró de Semer el monte de Samaria por dos talentos de plata, y edificó en el monte; y llamó el nombre de la ciudad que edificó, Samaria, del nombre de Semer..."},
-    { q: "¿Qué hechicero o falso profeta intentó comprar con dinero el poder del Espíritu Santo a los apóstoles?", o: ["Elimas", "Simón el Mago", "Barjesús", "Teudas"], a: 1, c: "HECHOS 8:18-19", vt: "Cuando vio Simón que por la imposición de las manos de los apóstoles se daba el Espíritu Santo, les ofreció dinero, diciendo: Dadme también a mí este poder..."},
-    { q: "¿Qué rey imperial de Asiria envió a su comandante Rabsaqué a ultrajar e intimidar al rey Ezequías?", o: ["Sargón II", "Senaquerib", "Tiglath-pileser", "Salmanasar"], a: 1, c: "2 REYES 18:13", vt: "A los catorce años del rey Ezequías, subió Senaquerib rey de Asiria contra todas las ciudades fortificadas de Judá, y las tomó."},
-    { q: "¿Qué noble nombre arameo poseía el campo de sangre adquirido con las monedas de la traición de Judas?", o: ["Aceldama", "Gólgota", "Gábata", "Betesda"], a: 0, c: "HECHOS 1:19", vt: "Y fue conocido por todos los habitantes de Jerusalén, de tal manera que aquel campo fue llamado en su propia lengua Aceldama, que es, Campo de sangre."},
-    { q: "¿Qué profeta presenció la visión de los cuatro carros tirados por caballos de diversos colores?", o: ["Zacarías", "Ezequiel", "Daniel", "Ageo"], a: 0, c: "ZACARÍAS 6:1", vt: "De nuevo alcé mis ojos y miré, y he aquí cuatro carros que salían de entre dos montes; y los montes eran de bronce."},
-    { q: "¿Cómo se llamaba el lugar donde Jacob vio la escalera que llegaba hasta el cielo?", o: ["Betel", "Peniel", "Siquem", "Beerseba"], a: 0, c: "GÉNESIS 28:19", vt: "Y llamó el nombre de aquel lugar Betel, aunque Luz era el nombre de la ciudad primero."},
-    { q: "¿Qué rey de Judá fue encerrado en una cadena de bronce y llevado cautivo a Babilonia?", o: ["Sedequías", "Joacim", "Joacaz", "Jeconías"], a: 0, c: "2 CRÓNICAS 36:10", vt: "A la salida del año, el rey Nabucodonosor envió y le llevó a Babilonia, juntamente con los objetos preciosos de la casa de Jehová, y constituyó a Sedequías su hermano por rey sobre Judá y Jerusalén."},
-    { q: "¿Qué sumo sacerdote halló el libro de la ley durante los trabajos de reparación del templo en tiempos de Josías?", o: ["Hilcías", "Joiada", "Zadoc", "Esdras"], a: 0, c: "2 REYES 22:8", vt: "Entonces el sumo sacerdote Hilcías dijo al escriba Safán: He hallado el libro de la ley en la casa de Jehová. E Hilcías dio el libro a Safán, y lo leyó."},
-    { q: "¿Qué profeta proclamó que la gloria postrera de este templo sería mayor que la primera?", o: ["Hageo", "Zacarías", "Malaquías", "Isaías"], a: 0, c: "HAGEO 2:9", vt: "La gloria postrera de esta casa será mayor que la primera, ha dicho Jehová de los ejércitos; y daré paz en este lugar, dice Jehová de los ejércitos."},
-    { q: "¿Qué hijo de Abraham con su concubina Cetura fue antecesor de madianitas y otros pueblos?", o: ["Madián", "Ismael", "Zimrán", "Todos los anteriores"], a: 3, c: "GÉNESIS 25:1-2", vt: "Abraham tomó otra mujer, cuyo nombre era Cetura, la cual le dio a luz a Zimrán, Jocsán, Madán, Madián, Isbac y Súa."},
-    { q: "¿Qué profeta pronunció fuertes juicios contra los sacerdotes corruptos por ofrecer pan inmundo y animales ciegos?", o: ["Malaquías", "Zacarías", "Hageo", "Amós"], a: 0, c: "MALAQUÍAS 1:6-8", vt: "El hijo honra al padre, y el siervo a su señor... y si os ofrezco pan inmundo, decís: ¿En qué te hemos deshonrado?"},
-    { q: "¿Qué rey persa concedió la carta y los recursos necesarios para que Esdras viajara a enseñar la ley a Jerusalén?", o: ["Artajerjes", "Ciro", "Darío", "Asuero"], a: 0, c: "ESDRAS 7:11", vt: "Esta es la copia de la carta que dio el rey Artajerjes al sacerdote Esdras, escriba versado en los mandamientos de Jehová..."},
-    { q: "¿Qué nombre recibió el lugar donde los israelitas hicieron un pacto de fidelidad bajo el liderazgo de Josué en Siquem?", o: ["Siquem", "Siloh", "Mizpa", "Gilgal"], a: 0, c: "JOSUÉ 24:25", vt: "Entonces Josué hizo pacto con el pueblo aquel día, y les dio estatutos y leyes en Siquem."},
-    { q: "¿Qué personaje del Nuevo Testamento es mencionado como el artífice principal de la carta a los Hebreos según algunos eruditos antiguos, aunque sin firma?", o: ["No especificado explícitamente", "Pablo", "Apolos", "Bernabé"], a: 0, c: "HEBREOS", vt: "El autor de la epístola a los Hebreos permanece anónimo en los manuscritos bíblicos canónicos tradicionales."},
-    { q: "¿Qué profeta del Antiguo Testamento disputó con los sacerdotes de Baal sobre un altar en el monte Carmelo?", o: ["Elías", "Eliseo", "Samuel", "Isaías"], a: 0, c: "1 REYES 18:22", vt: "Y Elías dijo al pueblo: Solo yo he quedado profeta de Jehová; mas de los profetas de Baal hay cuatrocientos cincuenta hombres."},
-    { q: "¿Qué rey filisteo de Gerar tomó a Sara creyendo que era hermana de Abraham?", o: ["Abimelec", "Aquis", "Eglón", "Og"], a: 0, c: "GÉNESIS 20:2", vt: "Y Abraham dijo de Sara su mujer: Es mi hermana. Y Abimelec rey de Gerar envió y tomó a Sara."},
-    { q: "¿Qué profeta vio una visión de un cesto de fruta de verano que simbolizaba el fin inminente de Israel?", o: ["Amós", "Oseas", "Joel", "Miqueas"], a: 0, c: "AMÓS 8:1-2", vt: "El Señor Jehová me enseñó así: He aquí un cesto de fruta de verano. Y dijo: ¿Qué ves, Amós? Y respondí: Un cesto de fruta de verano."},
-    { q: "¿Qué rey de Damasco envió a su siervo Hazael a consultar al profeta Eliseo acerca de su enfermedad?", o: ["Ben-hadad", "Rezín", "Jabín", "Senaquerib"], a: 0, c: "2 REYES 8:7", vt: "Eliseo fue a Damasco, y Ben-hadad rey de Siria estaba enfermo; y le dieron aviso, diciendo: El varón de Dios ha venido acá."},
-    { q: "¿Qué personaje del libro de Números profetizó viendo una estrella que saldría de Jacob?", o: ["Balaam", "Balac", "Jetro", "Job"], a: 0, c: "NÚMEROS 24:17", vt: "Lo veré, mas no ahora; Lo contemplaré, mas no de cerca; Saldrá estrella de Jacob, y se levantará cetro de Israel..."},
-    { q: "¿Qué rey de los amorreos fue derrotado por Josué cuando el sol se detuvo en Gabaón?", o: ["Adonisedec", "Sehón", "Og", "Eglón"], a: 0, c: "JOSUÉ 10:1", vt: "Aconteció que cuando Adonisedec rey de Jerusalén oyó que Josué había tomado a Hai... tuvo gran temor..."},
-    { q: "¿Qué profeta predijo el nacimiento de un rey llamado Josías que destruiría los altares idólatras de Betel, siglos antes de que ocurriera?", o: ["Un varón de Dios de Judá", "Elías", "Isaías", "Samuel"], a: 0, c: "1 REYES 13:2", vt: "Y clamó contra el altar... Oh altar, oh altar! Así ha dicho Jehová: He aquí que a la casa de David nacerá un hijo llamado Josías..."},
-    { q: "¿Qué comandante del ejército del rey Saúl pasó a ser aliado de David tras la muerte de Is-boset?", o: ["Abner", "Joab", "Amasá", "Benaía"], a: 0, c: "2 SAMUEL 3:12", vt: "Y envió Abner mensajeros a David de su parte, diciendo: ¿De quién es la tierra? Y que le dijesen: Haz tu pacto conmigo, y he aquí mi mano estará contigo para volver a ti a todo Israel."},
-    { q: "¿Qué mujer valiente de la tribu de Aser, profetisa anciana, dio gracias a Dios al ver al niño Jesús en el templo?", o: ["Ana", "Isabel", "Marta", "María"], a: 0, c: "LUCAS 2:36", vt: "Estaba también allí Ana, profetisa, hija de Fanuel, de la tribu de Aser, de edad muy avanzada..."},
-    { q: "¿Qué profeta menor describe la fuente abierta para la casa de David y para los moradores de Jerusalén para el pecado y la inmundicia?", o: ["Zacarías", "Hageo", "Malaquías", "Sofonías"], a: 0, c: "ZACARÍAS 13:1", vt: "En aquel tiempo habrá un manantial abierto para la casa de David y para los moradores de Jerusalén, para el pecado y la inmundicia."},
-    { q: "¿Qué rey de la dinastía de Omri en Israel promovió el culto a Baal de manera extrema estimulado por su esposa Jezabel?", o: ["Acab", "Joram", "Ocozías", "Jeroboam"], a: 0, c: "1 REYES 16:30-33", vt: "Y reinó Acab hijo de Omri sobre Israel en Samaria veintidós años... e hizo Acab una imagen de Asera, haciendo mucho más que todos los reyes de Israel que antes de él fueron para provocar la ira de Jehová Dios de Israel."},
-    { q: "¿Qué patriarca profetizó acerca del cetro que no se apartaría de Judá hasta que vinera Siloh?", o: ["Jacob", "Isaac", "Abraham", "Noé"], a: 0, c: "GÉNESIS 49:10", vt: "No será quitado el cetro de Judá, ni el legislador de entre sus pies, hasta que venga Siloh; y a él se congregarán los pueblos."},
-    { q: "¿Qué profeta vio una visión de un vaso de barro deshecho en las manos del alfarero en la casa del taller?", o: ["Jeremías", "Ezequiel", "Isaías", "Daniel"], a: 0, c: "JEREMÍAS 18:3-4", vt: "Y descendí a casa del alfarero, y he aquí que él trabajaba en la rueda. Y la vasija de barro que él hacía se echó a perder en su mano; y volvió y la hizo otra vasija..."},
-    { q: "¿Qué personaje del Nuevo Testamento es descrito como un rico terrateniente y miembro del Sanedrín que era discípulo secreto de Jesús?", o: ["José de Arimatea", "Nicodemo", "Gamaliel", "Zaqueo"], a: 0, c: "JUAN 19:38", vt: "Después de todo esto, José de Arimatea, que era discípulo de Jesús, pero secretamente por miedo de los judíos, rogó a Pilato que le permitiese sacar el cuerpo de Jesús..."},
-    { q: "¿Qué rey de Moab ofreció a su propio hijo primogénito en holocausto sobre el muro de la ciudad al verse acorralado en batalla?", o: ["Mesesa", "Balac", "Eglón", "Sehón"], a: 0, c: "2 REYES 3:27", vt: "Y tomó a su hijo primogénito que había de reinar en su lugar, y lo ofreció en holocausto sobre el muro. Y hubo gran enojo contra Israel; y se apartaron de él, y se volvieron a su tierra."},
-    { q: "¿Qué profeta pronunció la profecía acerca de que el justo vivirá por su fe, la cual fue citada tres veces en el Nuevo Testamento por Pablo?", o: ["Habacuc", "Miqueas", "Jonás", "Nahúm"], a: 0, c: "HABACUC 2:4", vt: "He aquí que aquel cuya alma no es recta, se enorgullece; mas el justo por su fe vivirá."},
-    { q: "¿Qué gobernador romano de Judea sucedió a Poncio Pilato según los registros históricos y está vinculado con el juicio a Pablo en Cesarea?", o: ["Porcio Festo", "Antonio Félix", "Quirinio", "Galión"], a: 0, c: "HECHOS 24:27", vt: "Pero pasada la zoleta de dos años, recibió Félix por sucesor a Porcio Festo; y queriendo Félix ganar la voluntad de los judíos, dejó preso a Pablo."},
-    { q: "¿Qué rey de Judá fue llevado cautivo a Babilonia en el primer asedio por Nabucodonosor antes de la destrucción total del templo?", o: ["Jeconías", "Joacim", "Sedequías", "Josías"], a: 0, c: "2 REYES 24:12", vt: "Entonces salió Jeconías rey de Judá al rey de Babilonia, él y su madre, sus siervos, sus príncipes y sus oficiales; y le prendió el rey de Babilonia en el año octavo de su reinado."},
-    { q: "¿Qué líder de la revuelta contra Moisés y Aarón era de la familia de Coat, de la tribu de Leví?", o: ["Coré", "Datán", "Abiram", "On"], a: 0, c: "NÚMEROS 16:1", vt: "Y Coré hijo de Izhar, hijo de Coat, hijo de Leví, tomó a Datán y a Abiram los hijos de Eliab, y a On hijo de Pelet, de los hijos de Rubén, y se levantaron contra Moisés."},
-    { q: "¿Qué profeta menor del Antiguo Testamento escribió un mensaje dirigido al rey Jeroboam II y al pueblo de Israel centrado en la justicia social y el juicio inminente?", o: ["Amós", "Oseas", "Joel", "Abdías"], a: 0, c: "AMÓS 1:1", vt: "Las palabras de Amós, que fue uno de los pastores de Tecoa, que vio acerca de Israel en días de Uzías rey de Judá, y en días de Jeroboam hijo de Joás rey de Israel, dos años antes del terremoto."},
-    { q: "¿Qué personaje del Nuevo Testamento es mencionado por Pablo como un fiel compañero que arriesgó su vida por la obra de Cristo en Filipos?", o: ["Epafrodito", "Tíquico", "Onésimo", "Epafras"], a: 0, c: "FILIPENSES 2:25", vt: "Mas tuve por necesario enviaros a Epafrodito, mi hermano y colaborador y compañero de milicia, vuestro mensajero, y ministrador de mis necesidades."}
-  ]
-  },
-  books: {
-    easy: [ 
-      { q: "«En el principio creó Dios los cielos y la tierra.»", o: ["GÉNESIS", "ÉXODO", "SALMOS", "MATEO"], a: 0, c: "GÉNESIS 1:1", vt: "En el principio creó Dios los cielos y la tierra." } ],
-    medium: [ { q: "«Jehová es mi pastor; nada me faltará.»", o: ["PROVERBIOS", "SALMOS", "ISAÍAS", "MATEO"], a: 1, c: "SALMOS 23:1", vt: "Jehová es mi pastor; nada me faltará." },
-      { q: "«Mas buscad primeramente el reino de Dios y su justicia, y todas estas cosas os serán añadidas.»", o: ["Mateo", "Marcos", "Lucas", "Juan"], a: 0, c: "MATEO 6:33", vt: "Mas buscad primeramente el reino de Dios y su justicia, y todas estas cosas os serán añadidas." },
-      { q: "«Fíate de Jehová de todo tu corazón, Y no te apoyes en tu propia prudencia.»", o: ["Salmos", "Proverbios", "Job", "Cantares"], a: 1, c: "PROVERBIOS 3:5", vt: "Fíate de Jehová de todo tu corazón, Y no te apoyes en tu propia prudencia." },
-      { q: "«Y sabemos que a los que aman a Dios, todas las cosas les ayudan a bien...»", o: ["Romanos", "1 Corintios", "Efesios", "Hebreos"], a: 0, c: "ROMANOS 8:28", vt: "Y sabemos que a los que aman a Dios, todas las cosas les ayudan a bien..." },
-      { q: "«Ciertamente llevó él nuestras enfermedades, y sufrió nuestros dolores...»", o: ["Jeremías", "Ezequiel", "Isaías", "Daniel"], a: 2, c: "ISAÍAS 53:4", vt: "Ciertamente llevó él nuestras enfermedades, y sufrió nuestros dolores..." },
-      { q: "«Todo tiene su tiempo, y todo lo que se quiere debajo del cielo tiene su hora.»", o: ["Proverbios", "Eclesiastés", "Salmos", "Sabiduría"], a: 1, c: "ECLESIASTÉS 3:1", vt: "Todo tiene su tiempo, y todo lo que se quiere debajo del cielo tiene su hora." },
-      { q: "«Clama a mí, y yo te responderé, y te enseñaré cosas grandes y ocultas que tú no conoces.»", o: ["Isaías", "Jeremías", "Lamentaciones", "Ezequiel"], a: 1, c: "JEREMÍAS 33:3", vt: "Clama a mí, y yo te responderé, y te enseñaré cosas grandes y ocultas que tú no conoces." },
-      { q: "«Instruye al niño en su camino, Y aun cuando fuere viejo no se apartará de él.»", o: ["Proverbios", "Salmos", "Deuteronomio", "Eclesiastés"], a: 0, c: "PROVERBIOS 22:6", vt: "Instruye al niño en su camino, Y aun cuando fuere viejo no se apartará de él." }, ],
-    hard: [ 
-      { q: "«Todo lo puedo en Cristo que me fortalece.»", o: ["FILIPENSES", "EFESIOS", "GÁLATAS", "COLOSENSES"], a: 0, c: "FILIPENSES 4:13", vt: "Todo lo puedo en Cristo que me fortalece." },
-      { q: "«Mas el fruto del Espíritu es amor, gozo, paz, paciencia, benignidad, bondad, fe...»", o: ["Efesios", "Gálatas", "Filipenses", "Colosenses"], a: 1, c: "GÁLATAS 5:22", vt: "Mas el fruto del Espíritu es amor, gozo, paz, paciencia, benignidad, bondad, fe..." },
-      { q: "«El amor es sufrido, es benigno; el amor no tiene envidia, el amor no es jactancioso...»", o: ["Romanos", "1 Corintios", "Efesios", "1 Juan"], a: 1, c: "1 CORINTIOS 13:4", vt: "El amor es sufrido, es benigno; el amor no tiene envidia..." },
-      { q: "«Por nada estéis afanosos, sino ostentad vuestras peticiones delante de Dios en toda oración...»", o: ["Filipenses", "Colosenses", "1 Tesalonicenses", "Tito"], a: 0, c: "FILIPENSES 4:6", vt: "Por nada estéis afanosos, sino sean conocidas vuestras peticiones delante de Dios en toda oración..." },
-      { q: "«Mirad cuál amor nos ha dado el Padre, para que seamos llamados hijos de Dios...»", o: ["Evangelio de Juan", "1 Juan", "Apocalipsis", "Romanos"], a: 1, c: "1 JUAN 3:1", vt: "Mirad cuál amor nos ha dado el Padre, para que seamos llamados hijos de Dios..." },
-      { q: "«Porque la paga del pecado es muerte, mas la dádiva de Dios es vida eterna...»", o: ["Gálatas", "Romanos", "Efesios", "Santiago"], a: 1, c: "ROMANOS 6:23", vt: "Porque la paga del pecado es muerte, mas la dádiva de Dios es vida eterna..." },
-      { q: "«Mira que te mando que te esfuerces y seas valiente; no temas ni desmayes...»", o: ["Josué", "Deuteronomio", "Jueces", "1 Samuel"], a: 0, c: "JOSUÉ 1:9", vt: "Mira que te mando que te esfuerces y seas valiente; no temas ni desmayes..." },
-      { q: "«En el mundo tendréis aflicción; pero confiad, yo he vencido al mundo.»", o: ["Hechos", "Juan", "Lucas", "Romanos"], a: 1, c: "JUAN 16:33", vt: "Estas cosas os he hablado para que en mí tengáis paz. En el mundo tendréis aflicción..." },
-      { q: "«Con Cristo estoy juntamente crucificado, y ya no vivo yo, mas vive Cristo en mí...»", o: ["Efesios", "Romanos", "Gálatas", "Filipenses"], a: 2, c: "GÁLATAS 2:20", vt: "Con Cristo estoy juntamente crucificado, y ya no vivo yo, mas vive Cristo en mí..." } ]
-  },
-  characters: {
-  easy: [
-    { name: "MOISÉS", options: ["MOISÉS", "AARÓN", "JOSUÉ", "GEDEÓN"], clues: ["Rescatado de las aguas del río", "Crio su infancia en el palacio real de Egipto", "Huyó al desierto tras defender a un hebreo", "Llamado por Dios a través de una zarza ardiente", "Tuvo a su hermano Aarón como fiel portavoz", "Confrontó con plagas al Faraón testarudo", "Lideró al pueblo dividiendo milagrosamente el mar", "Recibió los Diez Mandamientos en piedra", "Guió al pueblo rebelde durante 40 años en el desierto", "Contempló la Tierra Prometida desde el monte Nebo sin entrar"], ref: "ÉXODO / DEUTERONOMIO" },
-    { name: "DAVID", options: ["DAVID", "SAÚL", "SALOMÓN", "SAMSÓN"], clues: ["Era el menor de todos los hijos de Isaí", "Trabajaba como humilde pastor de ovejas en Belén", "Destacaba notablemente tocando con maestría el arpa", "Fue ungido en secreto por el profeta Samuel", "Obtuvo fama nacional al derrotar a un gigante filisteo", "Mantuvo una profunda amistad leal con Jonatán", "Compuso gran parte de los Salmos bíblicos", "Se consolidó como rey unificado en Jerusalén", "Cometió un grave error ético y moral con Betsabé", "La línea dinástica de la que descendió el Mesías lleva su nombre"], ref: "1 Y 2 SAMUEL" },
-    { name: "PEDRO", options: ["PEDRO", "PABLO", "JUAN", "SANTIAGO"], clues: ["Era hermano carnal del apóstol Andrés", "Trabajaba formalmente como pescador en Galilea", "Fue llamado a ser un distinguido 'pescador de hombres'", "Protagonizó el acto de caminar brevemente sobre las aguas", "Declaró con firme convicción: 'Tú eres el Cristo, el Hijo del Dios viviente'", "Actuó impulsivamente cortando la oreja a un criado", "Terminó negando conocer al Maestro en tres ocasiones distintas", "Lloró amargamente tras oír el canto matutino del gallo", "Predicó con poder el evangelio en el día de Pentecostés", "Su nombre original de nacimiento era Simón"], ref: "LOS EVANGELIOS / HECHOS" },
-    { name: "NOÉ", options: ["NOÉ", "ABRAHAM", "LOT", "ENOC"], clues: ["Vivió en una época caracterizada por profunda corrupción", "Halló inmensa gracia ante los ojos de Dios", "Recibió instrucciones divinas para construir una colosal estructura", "Utilizó madera de gofer para su gran obra", "Albergó en su interior parejas de toda clase de animales", "Se refugió allí estrictamente junto a su círculo familiar", "Soportó precipitaciones incesantes durante 40 días y noches", "Liberó primero un cuervo y luego una paloma", "Su embarcación terminó reposando sobre los montes de Ararat", "Dios estableció con él un pacto perpetuo sellado con un arco iris"], ref: "GÉNESIS 6-9" },
-    { name: "JOSUÉ", options: ["JOSUÉ", "MOISÉS", "CALEB", "AARÓN"], clues: ["Fui ministro y servidor personal de un gran líder de Israel", "Fui uno de los 12 espías enviados a explorar Canaán", "Fui uno de los dos únicos espías que trajo un reporte de fe", "Mi nombre original de infancia era Oseas, hijo de Nun", "Fui el sucesor designado del libertador de Egipto", "Dios me exhortó directamente a esforzarme y ser muy valiente", "Lideré de manera milagrosa el cruce en seco del río Jordán", "Bajo mi mando estratégico cayeron estrepitosamente los muros de Jericó", "Me encargué de repartir metódicamente la tierra prometida a las tribus", "Pronuncié la célebre frase: 'Yo y mi casa serviremos a Jehová'"], ref: "LIBRO DE JOSUÉ" },
-    { name: "ABRAHAM", options: ["ABRAHAM", "ISAAC", "JACOB", "NOÉ"], clues: ["Su nombre original era Abram antes de ser cambiado por Dios", "Originario de la ciudad de Ur de los caldeos", "Dejó su tierra obedeciendo un llamado divino de fe", "Dios le prometió que su descendencia sería como las estrellas", "Fue llamado el padre de la fe", "Tuvo un hijo con su esposa Sara en su vejez llamado Isaac", "Estuvo dispuesto a ofrecer a su hijo en el monte Moriah", "Tuvo un sobrino llamado Lot a quien rescató de Sodoma", "Su fe fue contada por justicia", "Es patriarca fundamental de las tres grandes religiones monoteístas"], ref: "GÉNESIS 12-25" },
-    { name: "ISAAC", options: ["ISAAC", "ABRAHAM", "JACOB", "ISMAEL"], clues: ["Su nacimiento fue milagroso debido a la avanzada edad de sus padres", "Su nombre significa 'risa'", "Fue atado sobre el altar como ofrenda de sacrificio por su padre", "Un carnero fue provisto por Dios en su lugar", "Se casó con Rebeca tras un largo viaje organizado por un siervo", "Fue padre de dos gemelos muy diferentes: Esaú y Jacob", "Fue engañado en su vejez por su hijo menor con ayuda de su madre", "Vivió gran parte de su vida en la región de Beerseba", "Cavó nuevamente los pozos abiertos por su padre", "Murió anciano y lleno de días en Hebrón"], ref: "GÉNESIS 21-35" },
-    { name: "JACOB", options: ["JACOB", "ESAÚ", "JOSE", "ISRAEL"], clues: ["Nació aferrado al talón de su hermano mellizo Esaú", "Compró la primogenitura a cambio de un plato de lentejas", "Obtuvo la bendición paterna mediante astucia y engaño", "Huyó hacia la tierra de su tío Labán en Harán", "Trabajó largos años por amor a Raquel", "Luchó mástil con un ángel en Peniel y fue rebautizado como Israel", "Tuvo doce hijos que formaron las tribus de Israel", "Sufrió profundamente al creer que su hijo favorito había muerto", "Reemprendió su viaje a Egipto en tiempos de hambre", "Bendijo a sus hijos antes de fallecer en tierra extranjera"], ref: "GÉNESIS 25-50" },
-    { name: "JOSÉ", options: ["JOSÉ", "BENJAMIN", "JUAN", "DANIEL"], clues: ["Era el hijo predilecto de Jacob y Raquel", "Sus hermanos le tenían envidia por una túnica de colores y sus sueños", "Fue arrojado a una cisterna vacía", "Vendido como esclavo a mercaderes ismaelitas", "Llevado a Egipto y comprado por Potifar", "Falsamente acusado por la esposa de su amo e encarcelado", "Interpretó los sueños del copero y del panadero", "Interpretó el sueño de las vacas flacas y gordas del Faraón", "Ascendió a virrey y máxima autoridad de Egipto", "Perdonó generosamente a sus hermanos durante la hambruna"], ref: "GÉNESIS 37-50" },
-    { name: "SAMUEL", options: ["SAMUEL", "ELI", "SAÚL", "DAVID"], clues: ["Su madre Ana lo prometió al Señor antes de nacer", "Creció sirviendo en el tabernáculo bajo la tutela del sacerdote Elí", "Escuchó el llamado de Dios siendo un niño en medio de la noche", "Llegó a ser el último juez y un respetado profeta de Israel", "Ungió al primer rey de Israel, Saúl", "Confrontó la desobediencia de Saúl con firmeza divina", "Ungió en secreto al joven pastor David en Belén", "Su liderazgo marcó la transición hacia la monarquía en Israel", "Intercedía constantemente en oración por el pueblo", "Su memoria fue muy respetada por todo el pueblo hebreo"], ref: "1 SAMUEL" },
-    { name: "SAÚL", options: ["SAÚL", "DAVID", "SALOMÓN", "ABNER"], clues: ["Pertenecía a la tribu de Benjamín y era de estatura alta y apuesta", "Fue ungido por Samuel como el primer rey de Israel", "Obtuvo victorias militares notables al inicio de su reinado", "Desobedeció las órdenes directas de Dios respecto a los amalecitas", "Comenzó a ser atormentado por un espíritu de angustia", "Intentó matar a David celoso de su éxito militar y popularidad", "Consultó de forma ilícita a una adivina en Endor", "Se refugió en el monte Gilboa durante una batalla crucial", "Se suicidó arrojándose sobre su propia espada al verse derrotado", "Su muerte abrió paso definitivo al reinado de David"], ref: "1 SAMUEL" },
-    { name: "SALOMÓN", options: ["SALOMÓN", "DAVID", "ROBOAM", "ABSALÓN"], clues: ["Era hijo del rey David y de Betsabé", "Sucedió a su padre en el trono de Israel", "Pidió a Dios un corazón sabio y entendido en lugar de riquezas", "Resolvió un famoso caso judicial entre dos madres con un bebé", "Escribió proverbios, cantares y libros de sabiduría", "Construyó el majestuoso templo de Jerusalén en varios años", "Recibió la célebre visita de la reina de Saba", "Acumuló gran riqueza, caballos y oro en abundancia", "Desvió su corazón en su vejez debido a sus muchas mujeres extranjeras", "Su desobediencia dividió el reino tras su fallecimiento"], ref: "1 REYES 1-11" },
-    { name: "ELÍAS", options: ["ELÍAS", "ELISEO", "ISAÍAS", "SAMUEL"], clues: ["Profeta tisbita que apareció repentinamente en tiempos del rey Acab", "Anunció una sequía prolongada sobre Israel que duró tres años", "Fue alimentado milagrosamente por cuervos junto a un arroyo", "Multiplicó la harina y el aceite de una viuda en Sarepta", "Desafió y derrotó a los profetas de Baal en el monte Carmelo", "Huyó atemorizado al desierto tras las amenazas de Jezabel", "Escuchó la voz de Dios en un silbo apacible y delicado", "Ungió a Eliseo como su sucesor profético", "No conoció la muerte física al ser llevado al cielo en un torbellino de fuego", "Apareció junto a Moisés hablando con Jesús en el monte de la Transfiguración"], ref: "1 Y 2 REYES" },
-    { name: "ELISEO", options: ["ELISEO", "ELÍAS", "GEZI", "MICAÍAS"], clues: ["Era hijo de Safat y araba con yuntas de bueyes al ser llamado", "Solicitó y recibió una doble porción del espíritu de Elías", "Dividió las aguas del río Jordán golpeándolas con el manto", "Sanó las aguas amargas de Jericó", "Multiplicó milagrosamente el aceite de una mujer pobre endeudada", "Resucitó al hijo de una mujer sunamita", "Sano de su lepra al general sirio Naamán al mandarle a sumergirse", "Hizo flotar milagrosamente un hacha de hierro en el agua", "Cegó temporalmente al ejército sirio que lo rodeaba", "Aun después de muerto, sus huesos devolvieron la vida a un hombre"], ref: "2 REYES 2-13" },
-    { name: "DANIEL", options: ["DANIEL", "EZEQUIEL", "JEREMÍAS", "ISAÍAS"], clues: ["Joven noble de Judá llevado cautivo a Babilonia en el primer asedio", "Recibió el nombre babilónico de Beltsasar", "Rechazó contaminarse con los manjares y el vino de la mesa real", "Interpretó con éxito los complejos sueños del rey Nabucodonosor", "Leyó la escritura misteriosa en la pared durante el banquete de Belsasar", "Fue fiel en la oración constante a pesar de los decretos en su contra", "Arrojado al foso de los leones por mantener su fe", "Protegido milagrosamente por un ángel que cerró las fauces de las bestias", "Experimentó profundas y detalladas visiones proféticas del fin de los tiempos", "Fue altamente estimado bajo los imperios babilónico y medo-persa"], ref: "LIBRO DE DANIEL" },
-    { name: "JONAS", options: ["JONAS", "NAHUM", "AMÓS", "OSEAS"], clues: ["Hijo de Amitai, profeta originario de Gat-hefer", "Enviado por Dios a predicar arrepentimiento a la violenta ciudad de Nínive", "Decidió huir por mar hacia Tarsis para escapar de su misión", "Desató una tempestad feroz que puso en peligro la nave", "Fue lanzado al mar por los propios marineros", "Tragado soberanamente por un gran pez preparado por Dios", "Permaneció tres días y tres noches en el interior del animal", "Vomitado con vida en la costa tras clamar al Señor", "Logró que toda Nínive se arrepintiera desde el rey hasta el menor", "Se enojó con Dios por mostrar compasión a sus enemigos"], ref: "LIBRO DE JONÁS" },
-    { name: "ESTEBAN", options: ["ESTEBAN", "FELIPE", "PABLO", "PEDRO"], clues: ["Fue elegido como uno de los primeros siete diáconos de la iglesia", "Hombre lleno de fe y del Espíritu Santo que hacía grandes prodigios", "Defendió valientemente su fe ante el tribunal del Sanedrín", "Repasó con maestría la historia de la salvación de Israel ante sus jueces", "Acusó a los líderes religiosos de resistir siempre al Espíritu Santo", "Vio los cielos abiertos y al Hijo del Hombre a la diestra de Dios", "Perdonó a sus verdugos mientras era lapidado", "Murió apedregado convirtiéndose en el primer mártir cristiano", "Un joven llamado Saulo estuvo presente custodiando las ropas de los verdugos", "Su martirio dio inicio a una gran persecución que esparció la iglesia"], ref: "HECHOS 6-7" },
-    { name: "PABLO", options: ["PABLO", "PEDRO", "BERNABÉ", "ESTEBAN"], clues: ["Nació en Tarso de Cilicia y era ciudadano romano de nacimiento", "Estudió rigurosamente los pies del maestro Gamaliel como fariseo", "Participó activamente aprobando la ejecución del primer mártir", "Fue cegado por una luz celestial en el camino a Damasco", "Pasó de ser un feroz perseguidor a un apasionado apóstol de Cristo", "Realizó múltiples viajes misioneros por el mundo mediterráneo", "Escribió gran parte de las epístolas del Nuevo Testamento", "Enfrentó naufragios, azotes, prisiones y juicios por causa del evangelio", "Defendió la justificación por la fe en Cristo", "Terminó su carrera martirizado en la ciudad de Roma"], ref: "HECHOS Y EPÍSTOLAS PAULINAS" },
-    { name: "MARÍA", options: ["MARÍA", "ISABEL", "MARTA", "MAGDALENA"], clues: ["Joven humilde y piadosa residente en la aldea de Nazaret", "Recibió el anuncio milagroso del ángel Gabriel", "Concebió al Salvador del mundo siendo virgen por obra del Espíritu Santo", "Pronunció el cántico de alabanza conocido como el Magníficat", "Dio a luz a Jesús en un pesebre en Belén", "Guardaba y meditaba todas estas cosas en su corazón", "Estuvo presente sufriendo al pie de la cruz durante la crucifixión", "Fue encomendada por Jesús al cuidado del discípulo amado", "Permanecía en oración unánime con los discípulos tras la ascensión", "Es recordada como una mujer bendita entre todas las mujeres"], ref: "LUCAS / JUAN" },
-    { name: "JUANA", options: ["JUANA", "MARÍA MAGDALENA", "SALOMÉ", "SUSANA"], clues: ["Era esposa de Cusa, un alto administrador del rey Herodes", "Formaba parte del grupo de mujeres que seguían y asistían a Jesús", "Suministraba recursos económicos de sus propios bienes para el ministerio", "Fue testigo de las enseñanzas y milagros del Maestro", "Acudió muy de mañana al sepulcro el primer día de la semana", "Encontró la piedra removida y el sepulcro vacío", "Escuchó el mensaje de los ángeles acerca de la resurrección", "Llevó las noticias impactantes a los apóstoles temerosos", "Experimentó una transformación radical de vida gracias al Señor", "Es mencionada en los relatos evangélicos como fiel discípula"], ref: "LUCAS 8 Y 24" } ],
-  medium: [
-    { name: "ESTER", options: ["ESTER", "RUT", "NOEMÍ", "VÁSQUEZ"], clues: ["Quedó huérfana de padres en su juventud", "Su nombre hebreo original era Hadasa", "Fue criada bajo la tutela amorosa de Mardoqueo", "Residía en la imponente ciudadela persa de Susa", "Logró ser elegida reina tras el destitución de Vasti", "Mantuvo oculto celosamente su origen étnico judío", "Enfrentó un complot mortal organizado por el visir Amán", "Pronunció la valiente frase: 'Si perezco, que perezca'", "Convocó a un riguroso ayuno comunitario de tres días", "Consiguió salvar de la destrucción total a su pueblo"], ref: "LIBRO DE ESTER" },
-    { name: "SANSÓN", options: ["SANSÓN", "GEDEÓN", "JEFTÉ", "AOD"], clues: ["Su nacimiento fue anunciado previamente por un ángel", "Estaba consagrado mediante el riguroso voto de nazareo", "Tenía prohibido estrictamente ingerir bebidas fermentadas o vino", "Destrozó con sus propias manos desnudas a un león rugiente", "Propuso un famoso enigma basado en un panal de miel", "Aniquiló a sus enemigos utilizando únicamente la quijada de un asno", "Arrancó y cargó sobre sus hombros las pesadas puertas de Gaza", "Se enamoró perdidamente de una mujer llamada Dalila", "Fue traicionado al revelarse el secreto místico de su cabello", "Derribó las columnas del templo pagano matando a más filisteos que en toda su vida"], ref: "JUECES 13-16" },
-    { name: "JONÁS", options: ["JONÁS", "AMÓS", "OSEAS", "MIQUEAS"], clues: ["Era hijo de un hombre llamado Amitai", "Recibió el mandato divino de predicar en una ciudad violenta", "Decidió desobedecer y huyó en dirección contraria hacia Tarsis", "Provocó una tormenta descomunal en alta mar", "Fue arrojado voluntariamente al agua por los marineros", "Fue tragado por un gran pez preparado soberanamente", "Permaneció tres días y tres noches en las entrañas del animal", "Fue devuelto a tierra firme tras ser vomitado en la playa", "Predicó un mensaje urgente de arrepentimiento que conmovió a toda Nínive", "Se enojó profundamente por la compasión y misericordia mostrada por Dios"], ref: "LIBRO DE JONÁS" },
-    { name: "NEHEMÍAS", options: ["NEHEMÍAS", "ESDRAS", "ZOROBABEL", "DANIEL"], clues: ["Vivía como exiliado en la lujosa ciudadela de Susa", "Desempeñaba un cargo de altísima confianza real: copero del rey", "Servía directamente bajo las órdenes del monarca persa Artajerjes", "Se entristeció gravemente al recibir noticias sobre su tierra", "Lloró al enterarse de que las murallas de Jerusalén seguían en ruinas", "Obtuvo autorización y salvoconducto para viajar como gobernador", "Inspeccionó sigilosamente los muros destruidos a caballo durante la noche", "Enfrentó la fuerte burla y oposición de Sanbalat y Tobías", "Organizó al pueblo para construir con una mano en la obra y otra en la espada", "Logró coronar con éxito la reconstrucción total de las murallas en 52 días"], ref: "LIBRO DE NEHEMÍAS" } ],
-  hard: [
-    { name: "MELQUISEDEC", options: ["MELQUISEDEC", "JETRO", "ABIMELEC", "BALAAM"], clues: ["Su título honorífico significa textualmente 'Rey de Justicia'", "Gobernaba como monarca en la ciudad de Salem", "Ostentaba simultáneamente los cargos de rey y sacerdote", "Salió al encuentro triunfal de Abram tras la batalla", "Ofrendó solemnemente elementos sencillos: pan y vino", "Pronunció una bendición especial sobre el patriarca", "Recibió de manos de Abram los diezmos de todo el botín", "La escritura destaca que no registra genealogía de principio ni fin", "Es presentado tipológicamente como una figura profética de Cristo", "El Nuevo Testamento exalta que su sacerdocio es superior al levítico"], ref: "GÉNESIS 14 / HEBREOS 7" },
-    { name: "BEZALEEL", options: ["BEZALEEL", "AHOLIAB", "HIRAM", "URÍ"], clues: ["Pertenecía por linaje a la tribu de Judá", "Fue llenado de manera extraordinaria del Espíritu de Dios", "Recibió dones excepcionales de sabiduría, inteligencia y ciencia", "Diseñó con perfección los planos artísticos del santuario", "Labró y fundió metales preciosos como oro y plata", "Trabajó con maestría en el tallado fino de maderas y piedras", "Tuvo como principal asistente y compañero a Aholiab", "Dirigió personalmente la construcción del Arca del Pacto", "Fabricó los utensilios sagrados incluyendo el gran candelabro de oro", "Es recordado como el maestro artesano principal del Tabernáculo"], ref: "ÉXODO 31" },
-    { name: "GIEZI", options: ["GIEZI", "HAZAEL", "BARUC", "JAHAZIEL"], clues: ["Desempeñaba el papel de siervo personal de un gran profeta", "Fue testigo directo de la multiplicación milagrosa del aceite", "Fue enviado en una misión especial para resucitar a un niño", "Vio cómo su amo rechazaba categóricamente los regalos de un general", "Permitió que la avaricia y la codicia nublaran su juicio moral", "Corrió sigilosamente tras el carruaje del general sanado", "Mintió descaradamente pidiendo plata y vestimentas costosas", "Ocultó los objetos ilícitamente obtenidos en su propia casa", "Fue confrontado severamente por su amo con espíritu profético", "Terminó heredando de forma permanente la lepra de Naamán"], ref: "2 REYES 5" },
-    { name: "ATALÍA", options: ["ATALÍA", "JEZABEL", "VASTI", "HERODÍAS"], clues: ["Era hija biológica del rey Acab y de la reina Jezabel", "Contrajo matrimonio con el rey de Judá por alianzas políticas", "Promovió activamente el culto idólatra a Baal dentro de Jerusalén", "Aprovechó la muerte de su hijo rey para usurpar el poder", "Gobernó con mano dura como reina autocrática de Judá durante 6 años", "Ordenó asesinar despiadadamente a toda la descendencia real", "Desconocía por completo que un infante real había sido rescatado y ocultado", "El sumo sacerdote Joiada organizó un golpe maestro para deponerla", "Gritó desesperada '¡Traición, traición!' al ver coronado al niño heredero", "Fue sacada de los recintos sagrados y ejecutada junto a las caballerizas"], ref: "2 REYES 11" }
-  ]
-  },
-  completeVerses: {
-    easy: [ { display: "Jehová es mi __1__; nada me __2__; En lugares de delicados __3__ me hará descansar.", correct: ["pastor", "faltará", "pastos"], distractors: ["amigo", "sobrará", "montes", "ríos", "guía", "caminos", "valles"], ref: "SALMOS 23:1-2" },
-  { display: "Porque de tal manera amó Dios al __1__, que ha dado a su Hijo __2__, para que todo aquel que en él cree, no se pierda, mas tenga vida __3__.", correct: ["mundo", "unigénito", "eterna"], distractors: ["pueblo", "amado", "abundante", "santo", "reino", "cielo", "verdad"], ref: "JUAN 3:16" },
-  { display: "Todo lo puedo en __1__ que me __2__; no obstante, bien hicisteis en participar conmigo en mi __3__.", correct: ["Cristo", "fortalece", "tribulación"], distractors: ["Dios", "ayuda", "alegría", "Señor", "guía", "camino", "fe"], ref: "FILIPENSES 4:13-14" },
-  { display: "Lámpara es a mis __1__ tu __2__, Y __3__ a mi camino.", correct: ["pies", "palabra", "lumbrera"], distractors: ["manos", "ley", "luz", "guía", "ojos", "verdad", "antorcha"], ref: "SALMOS 119:105" },
-  { display: "Fíate de Jehová de todo tu __1__, Y no te apoyes en tu propia __2__. Reconócelo en todos tus caminos, Y él enderezará tus __3__.", correct: ["corazón", "prudencia", "veredas"], distractors: ["alma", "sabiduría", "pasos", "mente", "fuerza", "caminos", "acciones"], ref: "PROVERBIOS 3:5-6" },
-  { display: "Amados, amémonos unos a otros; porque el __1__ is de Dios. Todo aquel que ama, es __2__ de Dios, y conoce a __3__.", correct: ["amor", "nacido", "Dios"], distractors: ["perdón", "hijo", "Cristo", "paz", "creado", "Señor", "bueno"], ref: "1 JUAN 4:7"},
-  { display: "Porque por __1__ sois salvos por medio de la __2__; y esto no de vosotros, pues es __3__ de Dios.", correct: ["gracia", "fe", "don"], distractors: ["obras", "ley", "regalo", "misericordia", "esperanza", "pago", "amor"], ref: "EFESIOS 2:8"},
-  { display: "Yo soy la __1__, vosotros los __2__; el que permanece en mí, y yo en él, éste lleva mucho __3__.", correct: ["vid", "pámpanos", "fruto"], distractors: ["puerta", "árbol", "ramas", "agua", "camino", "amor", "bien"], ref: "JUAN 15:5"},
-  { display: "El que habita al __1__ del Altísimo Morará bajo la __2__ del __3__.", correct: ["abrigo", "sombra", "Omnipotente"], distractors: ["lado", "luz", "Señor", "templo", "casa", "Dios", "protección"], ref: "SALMOS 91:1"},
-  { display: "Mas buscad primeramente el __1__ de Dios y su __2__, y todas estas cosas os serán __3__.", correct: ["reino", "justicia", "añadidas"], distractors: ["templo", "amor", "dadas", "rostro", "verdad", "entregadas", "multiplicadas"], ref: "MATEO 6:33"} ],
-    medium: [ { display: "Lámpara es a mis __1__ tu palabra, Y lumbrera a mi __2__.", correct: ["pies", "camino"], distractors: ["manos", "vida"], ref: "SALMOS 119:105" } ],
-    hard: [ { display: "Fíate de Jehová de todo tu __1__, y no te apuches en tu propia __2__.", correct: ["corazón", "prudencia"], distractors: ["mente", "fuerza"], ref: "PROVERBIOS 3:5" } ]
+// functions.js - Lógica central corregida
+let currentMode = 'general';
+let gameQuestions = [];
+let currentQIndex = 0;
+let points = 0;
+let streak = 0;
+let timer = null;
+let timeLeft = 15;
+let maxTime = 15;
+
+let generalSubMode = 'individual';
+let teamsList = [];
+let currentTeamIndex = 0;
+let teamScores = {};
+
+// Sistema de Comodines
+let count50 = 1;
+let countProb = 1;
+
+let charRole = 'participant';
+let charCurrentClue = 0;
+let charPointsPossible = 100;
+
+let completeSlots = [];
+let completeCorrectWords = [];
+let availableWordPool = [];
+
+// Control de Roles para Modo Personaje
+let selectedCharRole = 'participant';
+
+function showHub() {
+  if (timer) clearInterval(timer);
+  document.querySelectorAll('.card > div').forEach(div => div.classList.add('hidden'));
+  document.getElementById('hub-screen').classList.remove('hidden');
+}
+
+function openModeSetup(mode) {
+  currentMode = mode;
+  document.querySelectorAll('.card > div').forEach(div => div.classList.add('hidden'));
+  
+  if (mode === 'general') {
+    document.getElementById('setup-screen').classList.remove('hidden');
+    setGeneralMode('individual');
+  } else if (mode === 'book') {
+    document.getElementById('book-setup-screen').classList.remove('hidden');
+  } else if (mode === 'character') {
+    document.getElementById('char-setup-screen').classList.remove('hidden');
+  } else if (mode === 'complete') {
+    document.getElementById('complete-setup-screen').classList.remove('hidden');
   }
-};
+}
+
+function setGeneralMode(mode) {
+  generalSubMode = mode;
+  const btnInd = document.getElementById('btn-mode-ind');
+  const btnTeam = document.getElementById('btn-mode-team');
+  const teamContainer = document.getElementById('team-count-container');
+
+  if (mode === 'individual') {
+    btnInd.style.background = 'var(--gold-light)';
+    btnTeam.style.background = '#ffffff';
+    teamContainer.classList.add('hidden');
+  } else {
+    btnTeam.style.background = 'var(--gold-light)';
+    btnInd.style.background = '#ffffff';
+    teamContainer.classList.remove('hidden');
+    generateTeamInputs();
+  }
+}
+
+function generateTeamInputs() {
+  const count = parseInt(document.getElementById('team-count').value);
+  const container = document.getElementById('team-names-container');
+  container.innerHTML = "";
+  for (let i = 1; i <= count; i++) {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.id = `team-name-${i}`;
+    input.value = `Equipo ${i}`;
+    input.style.cssText = "padding: 8px; border: 1px solid #ccc; border-radius: 8px; font-family: inherit;";
+    container.appendChild(input);
+  }
+}
+
+function selectRandomQuestions(sourceArray, count = 10) {
+  return [...sourceArray].sort(() => Math.random() - 0.5).slice(0, Math.min(count, sourceArray.length));
+}
+
+function startGame(mode) {
+  currentQIndex = 0;
+  points = 0;
+  streak = 0;
+  currentTeamIndex = 0;
+  count50 = 1;
+  countProb = 1;
+  
+  if (mode === 'general') {
+    const diff = document.getElementById('difficulty').value;
+    maxTime = 15;
+    let source = (database.general && database.general[diff]) ? database.general[diff] : [];
+    let rawQuestions = selectRandomQuestions(source, 10);
+    
+    gameQuestions = rawQuestions.map(q => {
+      let indices = [0, 1, 2, 3].sort(() => Math.random() - 0.5);
+      return { ...q, o: indices.map(i => q.o[i]), a: indices.indexOf(q.a) };
+    });
+
+    if (generalSubMode === 'teams') {
+      const count = parseInt(document.getElementById('team-count').value);
+      teamsList = [];
+      teamScores = {};
+      for (let i = 1; i <= count; i++) {
+        const name = document.getElementById(`team-name-${i}`).value || `Equipo ${i}`;
+        teamsList.push(name);
+        teamScores[name] = 0;
+      }
+    }
+    
+    document.querySelectorAll('.card > div').forEach(div => div.classList.add('hidden'));
+    document.getElementById('game-screen').classList.remove('hidden');
+    renderGeneralQuestion();
+    
+  } else if (mode === 'book') {
+    const diff = document.getElementById('book-difficulty').value;
+    maxTime = 15;
+    let source = (database.books && database.books[diff]) ? database.books[diff] : [];
+    let rawQuestions = selectRandomQuestions(source, 10);
+    
+    gameQuestions = rawQuestions.map(q => {
+      let indices = [0, 1, 2, 3].sort(() => Math.random() - 0.5);
+      return { ...q, o: indices.map(i => q.o[i]), a: indices.indexOf(q.a) };
+    });
+    
+    document.querySelectorAll('.card > div').forEach(div => div.classList.add('hidden'));
+    document.getElementById('book-game-screen').classList.remove('hidden');
+    renderBookQuestion();
+  } else if (mode === 'complete') {
+    const diff = document.getElementById('complete-difficulty').value;
+    maxTime = 30;
+    let source = (database.completeVerses && database.completeVerses[diff]) ? database.completeVerses[diff] : [];
+    gameQuestions = selectRandomQuestions(source, 10);
+    
+    document.querySelectorAll('.card > div').forEach(div => div.classList.add('hidden'));
+    document.getElementById('complete-game-screen').classList.remove('hidden');
+    renderCompleteQuestion();
+  }
+}
+
+function setCharRole(role) {
+  selectedCharRole = role;
+  const btnPart = document.getElementById('btn-role-part');
+  const btnMod = document.getElementById('btn-role-mod');
+
+  if (role === 'participant') {
+    btnPart.style.background = 'var(--gold-light)';
+    btnMod.style.background = '#ffffff';
+  } else {
+    btnMod.style.background = 'var(--gold-light)';
+    btnPart.style.background = '#ffffff';
+  }
+}
+
+function startCharacterGame() {
+  startCharGameWithRole(selectedCharRole);
+}
+
+function startCharGameWithRole(role) {
+  charRole = role;
+  const diff = document.getElementById('char-difficulty').value;
+  let source = (database.characters && database.characters[diff]) ? database.characters[diff] : [];
+  gameQuestions = selectRandomQuestions(source, 10);
+  currentQIndex = 0;
+
+  document.querySelectorAll('.card > div').forEach(div => div.classList.add('hidden'));
+
+  if (charRole === 'participant') {
+    document.getElementById('char-game-screen').classList.remove('hidden');
+    renderCharQuestion();
+  } else {
+    document.getElementById('char-mod-game-screen').classList.remove('hidden');
+    renderCharModQuestion();
+  }
+}
+
+function renderGeneralQuestion() {
+  if (timer) clearInterval(timer);
+  if (currentQIndex >= gameQuestions.length) { showFinalResults(); return; }
+
+  const q = gameQuestions[currentQIndex];
+  let trackerText = `Pregunta ${currentQIndex + 1}/${gameQuestions.length}`;
+  if (generalSubMode === 'teams') {
+    trackerText = `Turno de: <strong>${teamsList[currentTeamIndex]}</strong> | ` + trackerText;
+  }
+  document.getElementById('question-tracker').innerHTML = trackerText;
+  document.getElementById('question-text').innerText = q.q;
+  
+  if (generalSubMode === 'teams') {
+    let scoreText = "Puntuaciones:\n";
+    teamsList.forEach(t => scoreText += `${t}: ${teamScores[t]} pts | `);
+    document.getElementById('player-display').innerText = scoreText.slice(0, -3);
+  } else {
+    document.getElementById('player-display').innerText = `Puntos: ${points}`;
+  }
+
+  document.getElementById('streak-display').innerText = streak;
+  document.getElementById('count-50').innerText = count50;
+  document.getElementById('count-prob').innerText = countProb;
+  document.getElementById('lifeline-50-btn').disabled = count50 <= 0;
+  document.getElementById('lifeline-prob-btn').disabled = countProb <= 0;
+
+  const notif = document.getElementById('inline-notification');
+  notif.classList.add('hidden');
+  notif.innerText = "";
+
+  document.getElementById('citation-text').classList.add('hidden');
+  document.getElementById('next-btn').classList.add('hidden');
+
+  const container = document.getElementById('options-container');
+  container.innerHTML = "";
+
+  q.o.forEach((opt, idx) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'btn option-btn';
+    btn.id = `opt-btn-${idx}`;
+    btn.innerText = opt;
+    btn.onclick = () => handleGeneralAnswer(idx, q.a);
+    container.appendChild(btn);
+  });
+
+  startTimer('timer', q.a, 15);
+}
+
+function useLifeline50() {
+  if (count50 <= 0) return;
+  count50--;
+  document.getElementById('count-50').innerText = count50;
+  document.getElementById('lifeline-50-btn').disabled = true;
+
+  const q = gameQuestions[currentQIndex];
+  let incorrectIndices = [];
+  q.o.forEach((_, idx) => {
+    if (idx !== q.a) incorrectIndices.push(idx);
+  });
+
+  incorrectIndices.sort(() => Math.random() - 0.5);
+  let removedCount = 0;
+  incorrectIndices.forEach(idx => {
+    if (removedCount < 2) {
+      const btn = document.getElementById(`opt-btn-${idx}`);
+      if (btn) {
+        btn.disabled = true;
+        btn.style.opacity = '0.3';
+        btn.style.textDecoration = 'line-through';
+      }
+      removedCount++;
+    }
+  });
+
+  showInlineNotification("✨ Comodín 50/50 aplicado: se eliminaron dos opciones incorrectas.");
+}
+
+function useLifelineProb() {
+  if (countProb <= 0) return;
+  countProb--;
+  document.getElementById('count-prob').innerText = countProb;
+  document.getElementById('lifeline-prob-btn').disabled = true;
+
+  const q = gameQuestions[currentQIndex];
+  let correctProb = Math.floor(Math.random() * 25) + 65;
+  let remainingProb = 100 - correctProb;
+  let incorrectProbs = [];
+  
+  q.o.forEach((_, idx) => {
+    if (idx !== q.a) {
+      let p = Math.floor(Math.random() * (remainingProb / 2));
+      incorrectProbs.push(p);
+      remainingProb -= p;
+    }
+  });
+  incorrectProbs.push(remainingProb);
+
+  let incIdx = 0;
+  q.o.forEach((_, idx) => {
+    const btn = document.getElementById(`opt-btn-${idx}`);
+    if (btn) {
+      let probVal = (idx === q.a) ? correctProb : incorrectProbs[incIdx++];
+      let tag = document.createElement('span');
+      tag.className = 'probability-tag';
+      tag.innerText = `${probVal}%`;
+      btn.appendChild(tag);
+    }
+  });
+
+  showInlineNotification("📊 Estadísticas de la congregación calculadas en pantalla.");
+}
+
+function showInlineNotification(msg) {
+  const notif = document.getElementById('inline-notification');
+  notif.innerText = msg;
+  notif.classList.remove('hidden');
+}
+
+function startTimer(timerElementId, correctIdx, seconds) {
+  if (timer) clearInterval(timer);
+  timeLeft = seconds;
+  const timerElem = document.getElementById(timerElementId);
+  if (timerElem) timerElem.innerText = `⏳ ${timeLeft}s`;
+  
+  timer = setInterval(() => {
+    timeLeft--;
+    if (timerElem) timerElem.innerText = `⏳ ${timeLeft}s`;
+
+    if (currentMode === 'character' && charRole === 'moderator') {
+      if (timeLeft % 10 === 0 && charPointsPossible > 0) {
+        charPointsPossible -= 10;
+        document.getElementById('char-mod-points').innerText = charPointsPossible;
+      }
+    }
+
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      if (currentMode === 'general') {
+        handleGeneralAnswer(-1, correctIdx);
+      } else if (currentMode === 'book') {
+        handleBookAnswer(-1, correctIdx);
+      } else if (currentMode === 'complete') {
+        validateCompleteAttempt();
+      } else if (currentMode === 'character') {
+        if (charRole === 'participant') {
+          charPointsPossible = 0;
+          document.getElementById('char-points').innerText = charPointsPossible;
+          handleCharAnswer('', null, gameQuestions[currentQIndex].name);
+        } else {
+          charPointsPossible = 0;
+          document.getElementById('char-mod-points').innerText = 0;
+          revealModAnswer();
+        }
+      }
+    }
+  }, 1000);
+}
+
+function handleGeneralAnswer(selectedIdx, correctIdx) {
+  if (timer) clearInterval(timer);
+  const q = gameQuestions[currentQIndex];
+  const buttons = document.querySelectorAll('#options-container .btn');
+  buttons.forEach(b => b.disabled = true);
+
+  if (selectedIdx === correctIdx) {
+    if (selectedIdx >= 0) document.getElementById(`opt-btn-${selectedIdx}`).classList.add('correct');
+    if (generalSubMode === 'teams') {
+      teamScores[teamsList[currentTeamIndex]] += 10;
+    } else {
+      points += 10;
+    }
+    
+    streak++;
+    if (streak % 3 === 0) {
+      if (Math.random() > 0.5) count50++; else countProb++;
+      showInlineNotification(`🔥 ¡Racha de ${streak}! Se ha renovado un comodín automáticamente.`);
+    }
+  } else {
+    if (selectedIdx >= 0) document.getElementById(`opt-btn-${selectedIdx}`).classList.add('incorrect');
+    if (correctIdx >= 0 && document.getElementById(`opt-btn-${correctIdx}`)) {
+      document.getElementById(`opt-btn-${correctIdx}`).classList.add('correct');
+    }
+    streak = 0;
+  }
+
+  document.getElementById('streak-display').innerText = streak;
+  document.getElementById('count-50').innerText = count50;
+  document.getElementById('count-prob').innerText = countProb;
+
+  if (generalSubMode === 'teams') {
+    let scoreText = "";
+    teamsList.forEach(t => scoreText += `${t}: ${teamScores[t]} pts | `);
+    document.getElementById('player-display').innerText = scoreText.slice(0, -3);
+  } else {
+    document.getElementById('player-display').innerText = `Puntos: ${points}`;
+  }
+
+  const cit = document.getElementById('citation-text');
+  cit.innerHTML = `<strong>${q.c}:</strong> "${q.vt}"`;
+  cit.classList.remove('hidden');
+  document.getElementById('next-btn').classList.remove('hidden');
+}
+
+function nextQuestion() {
+  if (generalSubMode === 'teams') {
+    currentTeamIndex = (currentTeamIndex + 1) % teamsList.length;
+  }
+  currentQIndex++;
+  renderGeneralQuestion();
+}
+
+function renderBookQuestion() {
+  if (timer) clearInterval(timer);
+  if (currentQIndex >= gameQuestions.length) { showFinalResults(); return; }
+
+  const q = gameQuestions[currentQIndex];
+  document.getElementById('book-question-tracker').innerText = `Pregunta ${currentQIndex + 1}/${gameQuestions.length}`;
+  document.getElementById('book-question-text').innerText = q.q;
+  document.getElementById('book-player-display').innerText = `Puntos: ${points}`;
+  
+  document.getElementById('book-citation-text').classList.add('hidden');
+  document.getElementById('book-next-btn').classList.add('hidden');
+
+  const container = document.getElementById('book-options-container');
+  container.innerHTML = "";
+
+  if (!q.o || !Array.isArray(q.o)) return;
+
+  q.o.forEach((opt, idx) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'btn option-btn';
+    btn.id = `book-opt-btn-${idx}`;
+    btn.innerText = opt;
+    btn.onclick = () => handleBookAnswer(idx, q.a);
+    container.appendChild(btn);
+  });
+
+  startTimer('book-timer', q.a, 15);
+}
+
+function handleBookAnswer(selectedIdx, correctIdx) {
+  if (timer) clearInterval(timer);
+  const q = gameQuestions[currentQIndex];
+  const buttons = document.querySelectorAll('#book-options-container .btn');
+  buttons.forEach(b => b.disabled = true);
+
+  if (selectedIdx === correctIdx) {
+    if (selectedIdx >= 0) document.getElementById(`book-opt-btn-${selectedIdx}`).classList.add('correct');
+    points += 10;
+  } else {
+    if (selectedIdx >= 0) document.getElementById(`book-opt-btn-${selectedIdx}`).classList.add('incorrect');
+    if (correctIdx >= 0 && document.getElementById(`book-opt-btn-${correctIdx}`)) {
+      document.getElementById(`book-opt-btn-${correctIdx}`).classList.add('correct');
+    }
+  }
+
+  document.getElementById('book-player-display').innerText = `Puntos: ${points}`;
+  const cit = document.getElementById('book-citation-text');
+  cit.innerHTML = `<strong>${q.c}:</strong> "${q.vt}"`;
+  cit.classList.remove('hidden');
+  document.getElementById('book-next-btn').classList.remove('hidden');
+}
+
+function nextBookQuestion() {
+  currentQIndex++;
+  renderBookQuestion();
+}
+
+function renderCharQuestion() {
+  if (timer) clearInterval(timer);
+  if (currentQIndex >= gameQuestions.length) { showFinalResults(); return; }
+
+  const q = gameQuestions[currentQIndex];
+  charCurrentClue = 0; 
+  charPointsPossible = 100;
+  
+  document.getElementById('char-tracker').innerText = `Personaje ${currentQIndex + 1}/${gameQuestions.length}`;
+  document.getElementById('char-points').innerText = charPointsPossible;
+  document.getElementById('clues-container').innerHTML = `<li>${q.clues[0]}</li>`;
+  document.getElementById('more-clue-btn').disabled = false;
+  document.getElementById('char-citation-text').classList.add('hidden');
+  document.getElementById('char-next-btn').classList.add('hidden');
+
+  const container = document.getElementById('char-options-container');
+  container.innerHTML = "";
+  let shuffledOpts = [...q.options].sort(() => Math.random() - 0.5);
+  shuffledOpts.forEach((opt) => {
+    const btn = document.createElement('button');
+    btn.className = 'btn option-btn'; 
+    btn.innerText = opt;
+    btn.onclick = () => handleCharAnswer(opt, btn, q.name);
+    container.appendChild(btn);
+  });
+
+  startTimer('char-timer', null, 10);
+}
+
+function revealNextClue() {
+  const q = gameQuestions[currentQIndex];
+  if (charCurrentClue < q.clues.length - 1) {
+    charCurrentClue++; 
+    charPointsPossible -= 10;
+    document.getElementById('char-points').innerText = charPointsPossible;
+    const li = document.createElement('li'); 
+    li.innerText = q.clues[charCurrentClue];
+    document.getElementById('clues-container').appendChild(li);
+
+    startTimer('char-timer', null, 10); 
+
+    if (charCurrentClue === q.clues.length - 1) {
+      document.getElementById('more-clue-btn').disabled = true;
+    }
+  }
+}
+
+function handleCharAnswer(opt, btn, correctName) {
+  if (timer) clearInterval(timer);
+  const buttons = document.querySelectorAll('#char-options-container .btn');
+  buttons.forEach(b => b.disabled = true);
+  document.getElementById('more-clue-btn').disabled = true;
+
+  if (opt === correctName) { 
+    if(btn) btn.classList.add('correct'); 
+    points += charPointsPossible; 
+  } else {
+    if(btn) btn.classList.add('incorrect');
+    buttons.forEach(b => { if (b.innerText === correctName) b.classList.add('correct'); });
+  }
+
+  const q = gameQuestions[currentQIndex];
+  const cit = document.getElementById('char-citation-text');
+  cit.innerHTML = `<strong>${q.name}:</strong> Referencia en ${q.ref}`;
+  cit.classList.remove('hidden');
+  document.getElementById('char-next-btn').classList.remove('hidden');
+}
+
+function nextCharQuestion() { currentQIndex++; renderCharQuestion(); }
+
+function renderCharModQuestion() {
+  if (timer) clearInterval(timer);
+  if (currentQIndex >= gameQuestions.length) { showFinalResults(); return; }
+
+  const q = gameQuestions[currentQIndex];
+  charPointsPossible = 100;
+  
+  document.getElementById('char-mod-points').innerText = charPointsPossible;
+  document.getElementById('char-mod-tracker').innerText = `Personaje ${currentQIndex + 1}/${gameQuestions.length}`;
+  document.getElementById('mod-reveal-ans-btn').classList.remove('hidden');
+  document.getElementById('mod-answer-box').classList.add('hidden');
+  document.getElementById('char-mod-next-btn').classList.add('hidden');
+  
+  const container = document.getElementById('mod-clues-container');
+  container.innerHTML = "";
+  q.clues.forEach((clueText, idx) => {
+    const pts = Math.max(0, 100 - (idx * 10));
+    const div = document.createElement('div'); 
+    div.style.cssText = "display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; font-size: 0.9rem; padding: 6px 8px; border-bottom: 1px dashed #e2e8f0;";
+    div.innerHTML = `<span style="background:var(--gold-light); color:var(--gold-dark); font-weight:700; font-size:0.75rem; padding: 2px 6px; border-radius: 6px;">${pts} pts</span> <span><strong>Pista ${idx + 1}:</strong> ${clueText}</span>`;
+    container.appendChild(div);
+  });
+
+  startTimer('char-mod-timer', null, 100);
+}
+
+function revealModAnswer() {
+  if (timer) clearInterval(timer);
+  const q = gameQuestions[currentQIndex];
+  document.getElementById('mod-reveal-ans-btn').classList.add('hidden');
+  
+  document.getElementById('mod-char-name-display').innerText = q.name;
+  document.getElementById('mod-char-ref-display').innerHTML = `Referencia: <strong>${q.ref}</strong>`;
+  
+  const awardContainer = document.getElementById('mod-award-buttons');
+  awardContainer.innerHTML = "";
+
+  if (generalSubMode === 'teams' && teamsList.length > 0) {
+    teamsList.forEach(team => {
+      const btn = document.createElement('button');
+      btn.className = 'btn';
+      btn.style.cssText = "margin:0; padding:8px 12px; font-size:0.85rem; background: var(--primary); width: auto;";
+      btn.innerText = `Asignar ${charPointsPossible} pts a ${team}`;
+      btn.onclick = () => {
+        teamScores[team] += charPointsPossible;
+        alert(`¡Se sumaron ${charPointsPossible} puntos a ${team}!`);
+        awardContainer.innerHTML = "<strong>¡Puntos Asignados!</strong>";
+      };
+      awardContainer.appendChild(btn);
+    });
+  } else {
+    const btnInd = document.createElement('button');
+    btnInd.className = 'btn';
+    btnInd.style.cssText = "margin:0; padding:8px 12px; font-size:0.85rem; background: var(--success); width: auto;";
+    btnInd.innerText = `Sumar ${charPointsPossible} pts al Participante`;
+    btnInd.onclick = () => {
+      points += charPointsPossible;
+      alert(`¡Se sumaron ${charPointsPossible} puntos!`);
+      awardContainer.innerHTML = "<strong>¡Puntos Asignados!</strong>";
+    };
+    awardContainer.appendChild(btnInd);
+  }
+
+  document.getElementById('mod-answer-box').classList.remove('hidden');
+  document.getElementById('char-mod-next-btn').classList.remove('hidden');
+}
+
+function nextCharModQuestion() { currentQIndex++; renderCharModQuestion(); }
+
+function renderCompleteQuestion() {
+  if (timer) clearInterval(timer);
+  if (currentQIndex >= gameQuestions.length) { showFinalResults(); return; }
+
+  const q = gameQuestions[currentQIndex];
+  let blanksCount = (q.display.match(/__\d+__/g) || []).length;
+  completeSlots = new Array(blanksCount).fill(null);
+  completeCorrectWords = q.correct;
+
+  document.getElementById('complete-tracker').innerText = `Versículo ${currentQIndex + 1}/${gameQuestions.length}`;
+  document.getElementById('complete-score').innerText = points;
+  document.getElementById('complete-citation-text').classList.add('hidden');
+  document.getElementById('complete-next-btn').classList.add('hidden');
+  document.getElementById('complete-confirm-btn').classList.remove('hidden');
+  document.getElementById('complete-confirm-btn').disabled = false;
+  
+  updateCompleteDisplayWithoutNumbers(q.display);
+
+  availableWordPool = [...q.correct, ...q.distractors].sort(() => Math.random() - 0.5);
+  renderWordPool();
+
+  startTimer('complete-timer', null, 30);
+}
+
+function updateCompleteDisplayWithoutNumbers(template) {
+  let renderedText = template;
+  completeSlots.forEach((slotObj, idx) => {
+    let slotHtml = slotObj ? `<span class="verse-slot filled" onclick="clearSlot(${idx})" style="background:#fefce8; border:1px solid var(--gold); padding:4px 8px; border-radius:6px; cursor:pointer; font-weight:700;">${slotObj.word} ✕</span>` : `<span class="verse-slot empty" style="color:#aaa;">_____</span>`;
+    renderedText = renderedText.replace(/__\d+__/, slotHtml);
+  });
+  document.getElementById('complete-verse-display').innerHTML = renderedText;
+}
+
+function renderWordPool() {
+  const poolContainer = document.getElementById('word-pool-container');
+  poolContainer.innerHTML = "";
+  availableWordPool.forEach((word, index) => {
+    const chip = document.createElement('div');
+    chip.style.cssText = "background: #f1f5f9; border: 2px solid #cbd5e1; border-radius: 8px; padding: 8px 12px; font-weight: 600; cursor: pointer; user-select: none;";
+    chip.innerText = word;
+    chip.onclick = () => selectWordFromPool(word, index);
+    poolContainer.appendChild(chip);
+  });
+}
+
+function selectWordFromPool(word, poolIndex) {
+  let emptyIndex = completeSlots.indexOf(null);
+  if (emptyIndex !== -1) {
+    completeSlots[emptyIndex] = { word: word, poolIndex: poolIndex };
+    availableWordPool[poolIndex] = null;
+    updateCompleteDisplayWithoutNumbers(gameQuestions[currentQIndex].display);
+    renderActiveWordPool();
+  }
+}
+
+function clearSlot(slotIndex) {
+  if (completeSlots[slotIndex] !== null) {
+    let originalPoolIndex = completeSlots[slotIndex].poolIndex;
+    availableWordPool[originalPoolIndex] = completeSlots[slotIndex].word;
+    completeSlots[slotIndex] = null;
+    updateCompleteDisplayWithoutNumbers(gameQuestions[currentQIndex].display);
+    renderActiveWordPool();
+  }
+}
+
+function renderActiveWordPool() {
+  const poolContainer = document.getElementById('word-pool-container');
+  poolContainer.innerHTML = "";
+  availableWordPool.forEach((word, index) => {
+    const chip = document.createElement('div');
+    if (word === null) {
+      chip.style.cssText = "background: #e2e8f0; border: 2px solid #cbd5e1; border-radius: 8px; padding: 8px 12px; font-weight: 600; opacity: 0.3; pointer-events: none;";
+      chip.innerText = "—";
+    } else {
+      chip.style.cssText = "background: #f1f5f9; border: 2px solid #cbd5e1; border-radius: 8px; padding: 8px 12px; font-weight: 600; cursor: pointer; user-select: none;";
+      chip.innerText = word;
+      chip.onclick = () => selectWordFromPool(word, index);
+    }
+    poolContainer.appendChild(chip);
+  });
+}
+
+function validateCompleteAttempt() {
+  if (timer) clearInterval(timer);
+  const q = gameQuestions[currentQIndex];
+  document.getElementById('complete-confirm-btn').disabled = true;
+
+  let userWords = completeSlots.map(s => s ? s.word.toLowerCase() : "");
+  let isCorrect = userWords.every((val, i) => val === q.correct[i].toLowerCase());
+
+  if (isCorrect) { 
+    points += 10; 
+    document.getElementById('complete-score').innerText = points; 
+  }
+  
+  let formattedCorrect = q.correct.join(', ');
+  const cit = document.getElementById('complete-citation-text');
+  cit.innerHTML = isCorrect ? `🎉 ¡Correcto! <strong>${q.ref}</strong>` : `❌ Incorrecto. Lo correcto era: ${formattedCorrect}. <strong>${q.ref}</strong>`;
+  cit.classList.remove('hidden'); 
+  document.getElementById('complete-next-btn').classList.remove('hidden');
+}
+
+function nextCompleteQuestion() { currentQIndex++; renderCompleteQuestion(); }
+
+function showFinalResults() {
+  if (timer) clearInterval(timer);
+  document.querySelectorAll('.card > div').forEach(div => div.classList.add('hidden'));
+  
+  let resultsScreen = document.getElementById('results-screen');
+  if (!resultsScreen) {
+    resultsScreen = document.createElement('div');
+    resultsScreen.id = 'results-screen';
+    resultsScreen.innerHTML = `
+      <h1>Resultados</h1>
+      <div class="verse-banner">
+        <strong>2 TIMOTEO 4:7:</strong> "He peleado la buena batalla, he acabado la carrera, he guardado la fe."
+      </div>
+      <p style="font-size: 1.5rem; text-align: center; font-weight: bold; color: var(--gold-dark); margin: 20px 0;">Puntuación Total: <span id="final-score">0</span> pts</p>
+      <button class="btn" onclick="showHub()">Menú Principal</button>
+    `;
+    document.querySelector('.card').appendChild(resultsScreen);
+  }
+  
+  resultsScreen.classList.remove('hidden');
+  if (generalSubMode === 'teams') {
+    let summary = "<h3>Resultados por Equipos:</h3><ul>";
+    for (let t in teamScores) {
+      summary += `<li><strong>${t}:</strong> ${teamScores[t]} pts</li>`;
+    }
+    summary += "</ul>";
+    document.getElementById('final-score').innerHTML = summary;
+  } else {
+    document.getElementById('final-score').innerText = points;
+  }
+}
