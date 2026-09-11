@@ -235,8 +235,17 @@ const database = {
   ]
   },
   books: {
-    easy: [ 
-      { q: "«En el principio creó Dios los cielos y la tierra.»", o: ["GÉNESIS", "ÉXODO", "SALMOS", "MATEO"], a: 0, c: "GÉNESIS 1:1", vt: "En el principio creó Dios los cielos y la tierra." } ],
+    easy: [ { q: "«En el principio creó Dios los cielos y la tierra.»", o: ["GÉNESIS", "ÉXODO", "SALMOS", "MATEO"], a: 0, c: "GÉNESIS 1:1", vt: "En el principio creó Dios los cielos y la tierra." }, 
+      { q: "«Jehová es mi pastor; nada me faltará.»", o: ["SALMOS", "PROVERBIOS", "ISAÍAS", "GÉNESIS"], a: 0, c: "SALMOS 23:1", vt: "Jehová es mi pastor; nada me faltará." },
+      { q: "«Lámpara es a mis pies tu palabra, y lumbrera a mi camino.»", o: ["SALMOS", "PROVERBIOS", "ÉXODO", "MATEO"], a: 0, c: "SALMOS 119:105", vt: "Lámpara es a mis pies tu palabra, y lumbrera a mi camino." },
+      { q: "«Fíate de Jehová de todo tu corazón, y no te apoyes en tu propia prudencia.»", o: ["PROVERBIOS", "SALMOS", "ECLESIASTÉS", "JOB"], a: 0, c: "PROVERBIOS 3:5", vt: "Fíate de Jehová de todo tu corazón, y no te apoyes en tu propia prudencia." },
+      { q: "«Todo lo puedo en Cristo que me fortalece.»", o: ["FILIPENSES", "EFESIOS", "ROMANOS", "GÁLATAS"], a: 0, c: "FILIPENSES 4:13", vt: "Todo lo puedo en Cristo que me fortalece." },
+      { q: "«Mas buscad primeramente el reino de Dios y su justicia, y todas estas cosas os serán añadidas.»", o: ["MATEO", "MARCOS", "LUCAS", "JUAN"], a: 0, c: "MATEO 6:33", vt: "Mas buscad primeramente el reino de Dios y su justicia, y todas estas cosas os serán añadidas." },
+      { q: "«Mira que te mando que te esfuerces y seas valiente; no temas ni desmayes...»", o: ["JOSUÉ", "DEUTERONOMIO", "JUECES", "NÚMEROS"], a: 0, c: "JOSUÉ 1:9", vt: "Mira que te mando que te esfuerces y seas valiente; no temas ni desmayes, porque Jehová tu Dios estará contigo en dondequiera que vayas." },
+      { q: "«Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito...»", o: ["JUAN", "MATEO", "ROMANOS", "EFESIOS"], a: 0, c: "JUAN 3:16", vt: "Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito, para que todo aquel que en él cree, no se pierda, mas tenga vida eterna." },
+      { q: "«Todo tiene su tiempo, y todo lo que se quiere debajo del cielo tiene su hora.»", o: ["ECLESIASTÉS", "PROVERBIOS", "SALMOS", "JOB"], a: 0, c: "ECLESIASTÉS 3:1", vt: "Todo tiene su tiempo, y todo lo que se quiere debajo del cielo tiene su hora." },
+      { q: "«Clama a mí, y yo te responderé, y te enseñaré cosas grandes y ocultas que tú no conoces.»", o: ["JEREMÍAS", "ISAÍAS", "EZEQUIEL", "DANIEL"], a: 0, c: "JEREMÍAS 33:3", vt: "Clama a mí, y yo te responderé, y te enseñaré cosas grandes y ocultas que tú no conoces." },
+      { q: "«Instruye al niño en su camino, y aun cuando fuere viejo no se apartará de él.»", o: ["PROVERBIOS", "SALMOS", "DEUTERONOMIO", "GÉNESIS"], a: 0, c: "PROVERBIOS 22:6", vt: "Instruye al niño en su camino, y aun cuando fuere viejo no se apartará de él." }, ],
     medium: [ { q: "«Jehová es mi pastor; nada me faltará.»", o: ["PROVERBIOS", "SALMOS", "ISAÍAS", "MATEO"], a: 1, c: "SALMOS 23:1", vt: "Jehová es mi pastor; nada me faltará." },
       { q: "«Mas buscad primeramente el reino de Dios y su justicia, y todas estas cosas os serán añadidas.»", o: ["Mateo", "Marcos", "Lucas", "Juan"], a: 0, c: "MATEO 6:33", vt: "Mas buscad primeramente el reino de Dios y su justicia, y todas estas cosas os serán añadidas." },
       { q: "«Fíate de Jehová de todo tu corazón, Y no te apoyes en tu propia prudencia.»", o: ["Salmos", "Proverbios", "Job", "Cantares"], a: 1, c: "PROVERBIOS 3:5", vt: "Fíate de Jehová de todo tu corazón, Y no te apoyes en tu propia prudencia." },
