@@ -13,7 +13,6 @@ let teamsList = [];
 let currentTeamIndex = 0;
 let teamScores = {};
 
-// Sistema de Comodines
 let count50 = 1;
 let countProb = 1;
 
@@ -26,86 +25,22 @@ let completeCorrectWords = [];
 let availableWordPool = [];
 
 let currentVerseIndex = 0;
-
-// Control de Roles para Modo Personaje
 let selectedCharRole = 'participant';
-
-// Configuración Multi-idioma y Splash Screen
 let splashInterval = null;
 let countdownTime = 10;
 let currentLang = 'es';
 
 const wisdomVerses = [
   {
-    es: {
-      ref: "Salmo 119:105",
-      text: "\"Lámpara es a mis pies tu palabra, y lumbrera a mi camino.\""
-    },
-    en: {
-      ref: "Psalm 119:105",
-      text: "\"Your word is a lamp to my feet and a light on my path.\""
-    },
-    pt: {
-      ref: "Salmos 119:105",
-      text: "\"O temor do Senhor é o princípio do conhecimento...\""
-    }
+    es: { ref: "Salmo 119:105", text: "\"Lámpara es a mis pies tu palabra, y lumbrera a mi camino.\"" },
+    en: { ref: "Psalm 119:105", text: "\"Your word is a lamp to my feet and a light on my path.\"" },
+    pt: { ref: "Salmos 119:105", text: "\"Lâmpada para os meus pés é a tua palavra e luz para o meu caminho.\"" }
   },
   {
-    es: {
-      ref: "Proverbios 1:7",
-      text: "\"El principio de la sabiduría es el temor de Jehová; los insensatos desprecian la sabiduría y la enseñanza.\""
-    },
-    en: {
-      ref: "Proverbs 1:7",
-      text: "\"The fear of the Lord is the beginning of knowledge...\""
-    },
-    pt: {
-      ref: "Provérbios 1:7",
-      text: "\"O temor do Senhor é o princípio do conhecimento...\""
-    }
-  },
-  {
-    es: {
-      ref: "Proverbios 2:6",
-      text: "\"Porque Jehová da la sabiduría, y de su boca viene el conocimiento y la inteligencia.\""
-    },
-    en: {
-      ref: "Proverbs 2:6",
-      text: "\"For the Lord gives wisdom; from his mouth come knowledge and understanding.\""
-    },
-    pt: {
-      ref: "Provérbios 2:6",
-      text: "\"Porque o Senhor dá a sabedoria, e da sua boca vem o conhecimento e o entendimento.\""
-    }
-  },
-  {
-    es: {
-      ref: "Proverbios 3:13",
-      text: "\"Bienaventurado el hombre que halla la sabiduría, y el hombre que adquiere entendimiento.\""
-    },
-    en: {
-      ref: "Proverbs 3:13",
-      text: "\"Blessed are those who find wisdom, those who gain understanding.\""
-    },
-    pt: {
-      ref: "Provérbios 3:13",
-      text: "\"Feliz o homem que acha a sabedoria, e o homem que adquire entendimento.\""
-    }
-  },
-  {
-    es: {
-      ref: "Santiago 1:5",
-      text: "\"Y si alguno de vosotros tiene falta de sabiduría, pídala a Dios, el cual da a todos abundantemente y sin reproche, y le será dada.\""
-    },
-    en: {
-      ref: "James 1:5",
-      text: "\"If any of you lacks wisdom, you should ask God, who gives generously to all without finding fault, and it will be given to you.\""
-    },
-    pt: {
-      ref: "Tiago 1:5",
-      text: "\"Se algum de vós tem falta de sabedoria, peça-a a Deus, que a todos dá liberalmente, e o não lança em rosto, and lhe será dada.\""
-    }
-  },
+    es: { ref: "Proverbios 1:7", text: "\"El principio de la sabiduría es el temor de Jehová; los insensatos desprecian la sabiduría y la enseñanza.\"" },
+    en: { ref: "Proverbs 1:7", text: "\"The fear of the Lord is the beginning of knowledge...\"" },
+    pt: { ref: "Provérbios 1:7", text: "\"O temor do Senhor é o princípio do conhecimento...\"" }
+  }
 ];
 
 const translations = {
@@ -115,7 +50,6 @@ const translations = {
 };
 
 function initSplash() {
-  // Seleccionar un versículo aleatorio y guardar su índice
   currentVerseIndex = Math.floor(Math.random() * wisdomVerses.length);
   const randomVerse = wisdomVerses[currentVerseIndex];
   
@@ -150,66 +84,42 @@ function initSplash() {
 
 function changeLanguage(lang) {
   currentLang = lang;
+  const hubSelect = document.getElementById('hub-lang-select');
+  if (hubSelect) hubSelect.value = lang;
   
   const titleSplash = document.getElementById('app-title-splash');
   if (titleSplash) titleSplash.innerText = translations[lang].title;
-  
-  const currentCountElem = document.getElementById('countdown-timer');
-  const currentCount = currentCountElem ? currentCountElem.innerText : "10";
-  const txtLoading = document.getElementById('txt-loading');
-  if (txtLoading) {
-    txtLoading.innerHTML = `${translations[lang].loadingText} <span id="countdown-timer">${currentCount}s</span>`;
-  }
 
-  // Actualizar referencia y texto usando directamente el índice guardado
   const verseObj = wisdomVerses[currentVerseIndex];
   const refElem = document.getElementById('splash-verse-ref');
   const textElem = document.getElementById('splash-verse-text');
   
-  if (refElem && verseObj) {
-    refElem.innerText = verseObj[lang].ref;
-  }
-  if (textElem && verseObj) {
-    textElem.innerText = verseObj[lang].text;
-  }
+  if (refElem && verseObj) refElem.innerText = verseObj[lang].ref;
+  if (textElem && verseObj) textElem.innerText = verseObj[lang].text;
+
+  if (splashInterval) clearInterval(splashInterval);
+  
+  const splashScreen = document.getElementById('splash-screen');
+  const hubScreen = document.getElementById('hub-screen');
+  
+  if (splashScreen) splashScreen.classList.add('hidden');
+  if (hubScreen) hubScreen.classList.remove('hidden');
 }
 
 function showComingSoon(messageKey) {
   const msg = translations[currentLang][messageKey] || "Próximamente...";
-  
   let alertBox = document.getElementById('custom-popup-alert');
   if (!alertBox) {
     alertBox = document.createElement('div');
     alertBox.id = 'custom-popup-alert';
     document.body.appendChild(alertBox);
   }
-  
   alertBox.innerText = msg;
   alertBox.classList.add('show-popup');
-
-  setTimeout(() => {
-    alertBox.classList.remove('show-popup');
-  }, 3000);
+  setTimeout(() => { alertBox.classList.remove('show-popup'); }, 3000);
 }
 
-function setChurchLogo(imageUrl, customTitle) {
-  const logoContainer = document.getElementById('church-logo-container');
-  const logoImg = document.getElementById('church-logo');
-  
-  if (imageUrl && logoImg && logoContainer) {
-    logoImg.src = imageUrl;
-    logoContainer.classList.remove('hidden');
-  }
-  if (customTitle) {
-    const titleSplash = document.getElementById('app-title-splash');
-    if (titleSplash) titleSplash.innerText = customTitle;
-  }
-}
-
-// Única carga al iniciar la ventana
-window.onload = () => {
-  initSplash();
-};
+window.onload = () => { initSplash(); };
 
 function showHub() {
   if (timer) clearInterval(timer);
@@ -427,11 +337,9 @@ function useLifeline50() {
 
   const q = gameQuestions[currentQIndex];
   let incorrectIndices = [];
-  q.o.forEach((_, idx) => {
-    if (idx !== q.a) incorrectIndices.push(idx);
-  });
-
+  q.o.forEach((_, idx) => { if (idx !== q.a) incorrectIndices.push(idx); });
   incorrectIndices.sort(() => Math.random() - 0.5);
+  
   let removedCount = 0;
   incorrectIndices.forEach(idx => {
     if (removedCount < 2) {
@@ -444,8 +352,7 @@ function useLifeline50() {
       removedCount++;
     }
   });
-
-  showInlineNotification("✨ Comodín 50/50 aplicado: se eliminaron dos opciones incorrectas.");
+  showInlineNotification("✨ Comodín 50/50 aplicado.");
 }
 
 function useLifelineProb() {
@@ -479,8 +386,7 @@ function useLifelineProb() {
       btn.appendChild(tag);
     }
   });
-
-  showInlineNotification("📊 Estadísticas de la congregación calculadas en pantalla.");
+  showInlineNotification("📊 Estadísticas calculadas.");
 }
 
 function showInlineNotification(msg) {
@@ -508,13 +414,10 @@ function startTimer(timerElementId, correctIdx, seconds) {
 
     if (timeLeft <= 0) {
       clearInterval(timer);
-      if (currentMode === 'general') {
-        handleGeneralAnswer(-1, correctIdx);
-      } else if (currentMode === 'book') {
-        handleBookAnswer(-1, correctIdx);
-      } else if (currentMode === 'complete') {
-        validateCompleteAttempt();
-      } else if (currentMode === 'character') {
+      if (currentMode === 'general') handleGeneralAnswer(-1, correctIdx);
+      else if (currentMode === 'book') handleBookAnswer(-1, correctIdx);
+      else if (currentMode === 'complete') validateCompleteAttempt();
+      else if (currentMode === 'character') {
         if (charRole === 'participant') {
           charPointsPossible = 0;
           document.getElementById('char-points').innerText = charPointsPossible;
@@ -537,16 +440,13 @@ function handleGeneralAnswer(selectedIdx, correctIdx) {
 
   if (selectedIdx === correctIdx) {
     if (selectedIdx >= 0) document.getElementById(`opt-btn-${selectedIdx}`).classList.add('correct');
-    if (generalSubMode === 'teams') {
-      teamScores[teamsList[currentTeamIndex]] += 10;
-    } else {
-      points += 10;
-    }
+    if (generalSubMode === 'teams') teamScores[teamsList[currentTeamIndex]] += 10;
+    else points += 10;
     
     streak++;
     if (streak % 3 === 0) {
       if (Math.random() > 0.5) count50++; else countProb++;
-      showInlineNotification(`🔥 ¡Racha de ${streak}! Se ha renovado un comodín automáticamente.`);
+      showInlineNotification(`🔥 ¡Racha de ${streak}! Comodín renovado.`);
     }
   } else {
     if (selectedIdx >= 0) document.getElementById(`opt-btn-${selectedIdx}`).classList.add('incorrect');
@@ -575,9 +475,7 @@ function handleGeneralAnswer(selectedIdx, correctIdx) {
 }
 
 function nextQuestion() {
-  if (generalSubMode === 'teams') {
-    currentTeamIndex = (currentTeamIndex + 1) % teamsList.length;
-  }
+  if (generalSubMode === 'teams') currentTeamIndex = (currentTeamIndex + 1) % teamsList.length;
   currentQIndex++;
   renderGeneralQuestion();
 }
@@ -764,7 +662,7 @@ function revealModAnswer() {
     const btnInd = document.createElement('button');
     btnInd.className = 'btn';
     btnInd.style.cssText = "margin:0; padding:8px 12px; font-size:0.85rem; background: var(--success); width: auto;";
-    btnInd.innerText = `Sumar ${charPointsPossible} pts al Participante`;
+    btnInd.innerText = `Sumar ${charPointsPossible} pts`;
     btnInd.onclick = () => {
       points += charPointsPossible;
       alert(`¡Se sumaron ${charPointsPossible} puntos!`);
@@ -796,7 +694,6 @@ function renderCompleteQuestion() {
   document.getElementById('complete-confirm-btn').disabled = false;
   
   updateCompleteDisplayWithoutNumbers(q.display);
-
   availableWordPool = [...q.correct, ...q.distractors].sort(() => Math.random() - 0.5);
   renderWordPool();
 
