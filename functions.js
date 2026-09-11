@@ -1,4 +1,4 @@
-// functions.js - Lógica central corregida
+// functions.js - Lógica central corregida y unificada
 let currentMode = 'general';
 let gameQuestions = [];
 let currentQIndex = 0;
@@ -25,13 +25,197 @@ let completeSlots = [];
 let completeCorrectWords = [];
 let availableWordPool = [];
 
+let currentVerseIndex = 0;
+
 // Control de Roles para Modo Personaje
 let selectedCharRole = 'participant';
+
+// Configuración Multi-idioma y Splash Screen
+let splashInterval = null;
+let countdownTime = 10;
+let currentLang = 'es';
+
+const wisdomVerses = [
+  {
+    es: {
+      ref: "Salmo 119:105",
+      text: "\"Lámpara es a mis pies tu palabra, y lumbrera a mi camino.\""
+    },
+    en: {
+      ref: "Psalm 119:105",
+      text: "\"Your word is a lamp to my feet and a light on my path.\""
+    },
+    pt: {
+      ref: "Salmos 119:105",
+      text: "\"O temor do Senhor é o princípio do conhecimento...\""
+    }
+  },
+  {
+    es: {
+      ref: "Proverbios 1:7",
+      text: "\"El principio de la sabiduría es el temor de Jehová; los insensatos desprecian la sabiduría y la enseñanza.\""
+    },
+    en: {
+      ref: "Proverbs 1:7",
+      text: "\"The fear of the Lord is the beginning of knowledge...\""
+    },
+    pt: {
+      ref: "Provérbios 1:7",
+      text: "\"O temor do Senhor é o princípio do conhecimento...\""
+    }
+  },
+  {
+    es: {
+      ref: "Proverbios 2:6",
+      text: "\"Porque Jehová da la sabiduría, y de su boca viene el conocimiento y la inteligencia.\""
+    },
+    en: {
+      ref: "Proverbs 2:6",
+      text: "\"For the Lord gives wisdom; from his mouth come knowledge and understanding.\""
+    },
+    pt: {
+      ref: "Provérbios 2:6",
+      text: "\"Porque o Senhor dá a sabedoria, e da sua boca vem o conhecimento e o entendimento.\""
+    }
+  },
+  {
+    es: {
+      ref: "Proverbios 3:13",
+      text: "\"Bienaventurado el hombre que halla la sabiduría, y el hombre que adquiere entendimiento.\""
+    },
+    en: {
+      ref: "Proverbs 3:13",
+      text: "\"Blessed are those who find wisdom, those who gain understanding.\""
+    },
+    pt: {
+      ref: "Provérbios 3:13",
+      text: "\"Feliz o homem que acha a sabedoria, e o homem que adquire entendimento.\""
+    }
+  },
+  {
+    es: {
+      ref: "Santiago 1:5",
+      text: "\"Y si alguno de vosotros tiene falta de sabiduría, pídala a Dios, el cual da a todos abundantemente y sin reproche, y le será dada.\""
+    },
+    en: {
+      ref: "James 1:5",
+      text: "\"If any of you lacks wisdom, you should ask God, who gives generously to all without finding fault, and it will be given to you.\""
+    },
+    pt: {
+      ref: "Tiago 1:5",
+      text: "\"Se algum de vós tem falta de sabedoria, peça-a a Deus, que a todos dá liberalmente, e o não lança em rosto, and lhe será dada.\""
+    }
+  },
+];
+
+const translations = {
+  es: { title: "Trivia Bíblica RVR1960", loadingText: "Iniciamos en...", comingSoon: "Próximamente: ¿Cuánto sabes de...?" },
+  en: { title: "Bible Trivia KJV", loadingText: "Starting in...", comingSoon: "Coming soon: How much do you know about...?" },
+  pt: { title: "Trivia Bíblica", loadingText: "Começamos em...", comingSoon: "Em breve: Quanto você sabe sobre...?" }
+};
+
+function initSplash() {
+  // Seleccionar un versículo aleatorio y guardar su índice
+  currentVerseIndex = Math.floor(Math.random() * wisdomVerses.length);
+  const randomVerse = wisdomVerses[currentVerseIndex];
+  
+  const refElem = document.getElementById('splash-verse-ref');
+  const textElem = document.getElementById('splash-verse-text');
+  
+  if (refElem && textElem) {
+    refElem.innerText = randomVerse[currentLang].ref;
+    textElem.innerText = randomVerse[currentLang].text;
+  }
+
+  countdownTime = 10;
+  const timerElem = document.getElementById('countdown-timer');
+  if (timerElem) timerElem.innerText = countdownTime;
+
+  if (splashInterval) clearInterval(splashInterval);
+
+  splashInterval = setInterval(() => {
+    countdownTime--;
+    const currentTimerElem = document.getElementById('countdown-timer');
+    if (currentTimerElem) currentTimerElem.innerText = countdownTime;
+
+    if (countdownTime <= 0) {
+      clearInterval(splashInterval);
+      const splashScreen = document.getElementById('splash-screen');
+      const hubScreen = document.getElementById('hub-screen');
+      if (splashScreen) splashScreen.classList.add('hidden');
+      if (hubScreen) hubScreen.classList.remove('hidden');
+    }
+  }, 1000);
+}
+
+function changeLanguage(lang) {
+  currentLang = lang;
+  
+  const titleSplash = document.getElementById('app-title-splash');
+  if (titleSplash) titleSplash.innerText = translations[lang].title;
+  
+  const currentCountElem = document.getElementById('countdown-timer');
+  const currentCount = currentCountElem ? currentCountElem.innerText : "10";
+  const txtLoading = document.getElementById('txt-loading');
+  if (txtLoading) {
+    txtLoading.innerHTML = `${translations[lang].loadingText} <span id="countdown-timer">${currentCount}s</span>`;
+  }
+
+  // Actualizar referencia y texto usando directamente el índice guardado
+  const verseObj = wisdomVerses[currentVerseIndex];
+  const refElem = document.getElementById('splash-verse-ref');
+  const textElem = document.getElementById('splash-verse-text');
+  
+  if (refElem && verseObj) {
+    refElem.innerText = verseObj[lang].ref;
+  }
+  if (textElem && verseObj) {
+    textElem.innerText = verseObj[lang].text;
+  }
+}
+
+function showComingSoon(messageKey) {
+  const msg = translations[currentLang][messageKey] || "Próximamente...";
+  
+  let alertBox = document.getElementById('custom-popup-alert');
+  if (!alertBox) {
+    alertBox = document.createElement('div');
+    alertBox.id = 'custom-popup-alert';
+    document.body.appendChild(alertBox);
+  }
+  
+  alertBox.innerText = msg;
+  alertBox.classList.add('show-popup');
+
+  setTimeout(() => {
+    alertBox.classList.remove('show-popup');
+  }, 3000);
+}
+
+function setChurchLogo(imageUrl, customTitle) {
+  const logoContainer = document.getElementById('church-logo-container');
+  const logoImg = document.getElementById('church-logo');
+  
+  if (imageUrl && logoImg && logoContainer) {
+    logoImg.src = imageUrl;
+    logoContainer.classList.remove('hidden');
+  }
+  if (customTitle) {
+    const titleSplash = document.getElementById('app-title-splash');
+    if (titleSplash) titleSplash.innerText = customTitle;
+  }
+}
+
+// Única carga al iniciar la ventana
+window.onload = () => {
+  initSplash();
+};
 
 function showHub() {
   if (timer) clearInterval(timer);
   document.querySelectorAll('.card > div').forEach(div => div.classList.add('hidden'));
-  document.getElementById('hub-screen').classList.remove('hidden');
+  const hubScreen = document.getElementById('hub-screen');
+  if (hubScreen) hubScreen.classList.remove('hidden');
 }
 
 function openModeSetup(mode) {
@@ -57,20 +241,23 @@ function setGeneralMode(mode) {
   const teamContainer = document.getElementById('team-count-container');
 
   if (mode === 'individual') {
-    btnInd.style.background = 'var(--gold-light)';
-    btnTeam.style.background = '#ffffff';
-    teamContainer.classList.add('hidden');
+    if (btnInd) btnInd.style.background = 'var(--gold-light)';
+    if (btnTeam) btnTeam.style.background = '#ffffff';
+    if (teamContainer) teamContainer.classList.add('hidden');
   } else {
-    btnTeam.style.background = 'var(--gold-light)';
-    btnInd.style.background = '#ffffff';
-    teamContainer.classList.remove('hidden');
+    if (btnTeam) btnTeam.style.background = 'var(--gold-light)';
+    if (btnInd) btnInd.style.background = '#ffffff';
+    if (teamContainer) teamContainer.classList.remove('hidden');
     generateTeamInputs();
   }
 }
 
 function generateTeamInputs() {
-  const count = parseInt(document.getElementById('team-count').value);
+  const countSelect = document.getElementById('team-count');
+  if (!countSelect) return;
+  const count = parseInt(countSelect.value);
   const container = document.getElementById('team-names-container');
+  if (!container) return;
   container.innerHTML = "";
   for (let i = 1; i <= count; i++) {
     const input = document.createElement('input');
@@ -110,7 +297,8 @@ function startGame(mode) {
       teamsList = [];
       teamScores = {};
       for (let i = 1; i <= count; i++) {
-        const name = document.getElementById(`team-name-${i}`).value || `Equipo ${i}`;
+        const teamInput = document.getElementById(`team-name-${i}`);
+        const name = (teamInput && teamInput.value) ? teamInput.value : `Equipo ${i}`;
         teamsList.push(name);
         teamScores[name] = 0;
       }
@@ -152,11 +340,11 @@ function setCharRole(role) {
   const btnMod = document.getElementById('btn-role-mod');
 
   if (role === 'participant') {
-    btnPart.style.background = 'var(--gold-light)';
-    btnMod.style.background = '#ffffff';
+    if (btnPart) btnPart.style.background = 'var(--gold-light)';
+    if (btnMod) btnMod.style.background = '#ffffff';
   } else {
-    btnMod.style.background = 'var(--gold-light)';
-    btnPart.style.background = '#ffffff';
+    if (btnMod) btnMod.style.background = 'var(--gold-light)';
+    if (btnPart) btnPart.style.background = '#ffffff';
   }
 }
 
