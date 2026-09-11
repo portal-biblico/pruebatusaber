@@ -10,16 +10,14 @@
 <body>
 
 <div class="card">
-<!-- PANTALLA 1: SPLASH SCREEN / APERTURA -->
+  <!-- PANTALLA 1: SPLASH SCREEN / APERTURA -->
   <div id="splash-screen" class="splash-container" style="text-align: center;">
-    <!-- Logo opcional -->
     <div id="church-logo-container" class="hidden" style="margin-bottom: 15px;">
       <img id="church-logo" src="" alt="Logo Iglesia" style="max-height: 70px; object-fit: contain;">
     </div>
 
     <h1 id="app-title-splash" style="margin-bottom: 12px;">Trivia Bíblica RVR1960</h1>
     
-    <!-- Selector de Idioma con Botones de Banderas -->
     <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 15px;">
       <button class="menu-btn lang-btn" onclick="changeLanguage('es')" style="padding: 8px 14px; font-size: 0.85rem; flex: 0 1 auto;">🇪🇸 Español</button>
       <button class="menu-btn lang-btn" onclick="changeLanguage('en')" style="padding: 8px 14px; font-size: 0.85rem; flex: 0 1 auto;">🇺🇸 English</button>
@@ -35,11 +33,17 @@
       <span id="txt-loading">Iniciamos en... <span id="countdown-timer">10</span>s</span>
     </div>
   </div>
-
   
   <!-- HUB PRINCIPAL -->
   <div id="hub-screen" class="hidden">
-    <h1 id="hub-title">Selecciona una Modalidad de Juego</h1>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+      <h1 id="hub-title" style="margin: 0; border: none; padding: 0;">Selecciona una Modalidad de Juego</h1>
+      <select id="hub-lang-select" onchange="changeLanguage(this.value)" style="width: auto; padding: 6px 10px; font-weight: 700; cursor: pointer;">
+        <option value="es">ES</option>
+        <option value="en">EN</option>
+        <option value="pt">PO</option>
+      </select>
+    </div>
     
     <div class="menu-grid" style="grid-template-columns: 1fr 1fr; gap: 10px;">
       <button class="menu-btn" onclick="openModeSetup('general')">
@@ -62,7 +66,6 @@
         <small>Completa espacios</small>
       </button>
 
-      <!-- Nuevas Categorías Preparadas -->
       <button class="menu-btn" onclick="showComingSoon('comingSoon')" style="border-color: var(--primary);">
         <span>💡 ¿Cuánto sabes de...?</span>
         <small>Temas y Capítulos</small>
@@ -125,7 +128,7 @@
     <button class="btn btn-secondary" onclick="showHub()">Volver al Menú Principal</button>
   </div>
 
-<!-- CONFIGURACIÓN DE ¿QUÉ PERSONAJE ES? -->
+  <!-- CONFIGURACIÓN DE ¿QUÉ PERSONAJE ES? -->
   <div id="char-setup-screen" class="hidden">
     <h1>¿Qué personaje es?</h1>
     <div class="form-group">
@@ -167,12 +170,10 @@
     <button class="btn btn-secondary" onclick="showHub()">Volver al Menú Principal</button>
   </div>
 
- <!-- PANTALLA DE JUEGO: ¿QUÉ LIBRO ESTÁ? (DEDICADA) -->
+  <!-- PANTALLA DE JUEGO: ¿QUÉ LIBRO ESTÁ? -->
   <div id="book-game-screen" class="hidden">
     <div class="status-bar">
-      <div>
-        <span id="book-player-display">Puntos: 0</span>
-      </div>
+      <div><span id="book-player-display">Puntos: 0</span></div>
       <span class="timer" id="book-timer">⏳ 15s</span>
     </div>
 
@@ -189,16 +190,13 @@
     <button class="btn btn-secondary" onclick="showHub()">Volver al Menú Principal</button>
   </div>
 
-  <!-- PANTALLA DE JUEGO GENERAL / LIBRO (CON COMODINES) -->
+  <!-- PANTALLA DE JUEGO GENERAL -->
   <div id="game-screen" class="hidden">
     <div class="status-bar">
-      <div>
-        <span id="player-display">Puntos: 0</span>
-      </div>
+      <div><span id="player-display">Puntos: 0</span></div>
       <span class="timer" id="timer">⏳ 10s</span>
     </div>
 
-    <!-- Barra de Comodines y Rachas -->
     <div class="lifelines-bar">
       <div>🔥 Racha: <span id="streak-display">0</span>/3</div>
       <div style="display: flex; gap: 8px;">
@@ -207,7 +205,6 @@
       </div>
     </div>
 
-    <!-- Notificación In-Line (Sin Pop-ups) -->
     <div id="inline-notification" class="inline-notification hidden"></div>
 
     <div style="text-align: right; font-size: 0.85rem; font-weight: 600; color: #666; margin-bottom: 4px;" id="question-tracker">Pregunta 1/10</div>
@@ -222,7 +219,8 @@
     <button id="next-btn" class="btn hidden" onclick="nextQuestion()">Siguiente Pregunta</button>
     <button class="btn btn-secondary" onclick="showHub()">Volver al Menú Principal</button>
   </div>
-  <!-- PANTALLA: ¿QUÉ PERSONAJE ES? (MODO PARTICIPANTE) -->
+
+  <!-- PANTALLA: ¿QUÉ PERSONAJE ES? (PARTICIPANTE) -->
   <div id="char-game-screen" class="hidden">
     <div class="status-bar">
       <div>
@@ -246,7 +244,7 @@
     <button class="btn btn-secondary" onclick="showHub()">Volver al Menú Principal</button>
   </div>
 
-  <!-- PANTALLA: ¿QUÉ PERSONAJE ES? (MODO MODERADOR CON ASIGNACIÓN DE PUNTOS) -->
+  <!-- PANTALLA: ¿QUÉ PERSONAJE ES? (MODERADOR) -->
   <div id="char-mod-game-screen" class="hidden">
     <div class="status-bar">
       <div>
@@ -291,7 +289,7 @@
       <h3 id="complete-verse-display" style="margin: 0; font-size: 1.05rem; line-height: 1.6; text-align:center;"></h3>
     </div>
 
-    <label style="font-size: 0.85rem; text-align: center; color: #555; margin-bottom: 6px;">Haz clic en las palabras en orden (puedes hacer clic en los espacios para deseleccionar):</label>
+    <label style="font-size: 0.85rem; text-align: center; color: #555; margin-bottom: 6px;">Haz clic en las palabras en orden:</label>
     <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 6px;" id="word-pool-container"></div>
     <div id="complete-citation-text" class="citation-box hidden"></div>
 
